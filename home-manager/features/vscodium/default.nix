@@ -1,13 +1,13 @@
 {
   lib,
-  stable-pkgs,
+  pkgs,
   config,
   ...
 }:
 {
   programs.vscode = {
     enable = true;
-    package = stable-pkgs.vscodium;
+    package = pkgs.vscodium;
     userSettings = {
       "editor.tabSize" = 2;
       "explorer.confirmDragAndDrop" = false;
@@ -16,7 +16,14 @@
       "git.confirmSync" = false;
       "workbench.startupEditor" = "none";
       "terminal.integrated.enablePersistentSessions" = false;
+      "editor.defaultFormatter"= "esbenp.prettier-vscode";
+      "window.titleBarStyle" = "custom";
     };
-    extensions = with stable-pkgs; [ vscode-extensions.jnoortheen.nix-ide ];
+    extensions = with pkgs; [ vscode-extensions.jnoortheen.nix-ide ];
   };
+
+  xdg.configFile."codium-flags.conf".text = ''
+    --enable-features=WaylandWindowDecorations
+    --ozone-platform-hint=auto
+  '';
 }

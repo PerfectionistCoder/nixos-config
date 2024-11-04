@@ -13,5 +13,6 @@
     "zsh"
 
     "gnome"
+    "ssh"
   ];
 }

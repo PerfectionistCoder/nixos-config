@@ -16,8 +16,12 @@
       "git.confirmSync" = false;
       "workbench.startupEditor" = "none";
       "terminal.integrated.enablePersistentSessions" = false;
-      "editor.defaultFormatter"= "esbenp.prettier-vscode";
       "window.titleBarStyle" = "custom";
+      "javascript.updateImportsOnFileMove.enabled" = "always";
+      "nix.formatterPath" = "nixfmt";
+      "[nix]" = {
+        "editor.defaultFormatter" = "jnoortheen.nix-ide";
+      };
     };
     extensions = with pkgs; [ vscode-extensions.jnoortheen.nix-ide ];
   };

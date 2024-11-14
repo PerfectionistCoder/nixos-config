@@ -4,6 +4,7 @@
     wev
     trashy
     nurl
+    nixfmt-rfc-style
   ];
 
   custom = {

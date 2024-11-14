@@ -7,5 +7,8 @@
     extraConfig = {
       init.defaultBranch = "main";
     };
+    aliases= {
+      push-auth = "!f() { git push $(pass-github-tokens) \"$@\"; }; f";
+    };
   };
 }

@@ -4,7 +4,7 @@ let
   disable_keys = concatStringsSep "\n" (
     map (key: "bindkey -s '${key}' '\\a'") [
       # home end
-      "^[[2~"
+      "^[[F"
       "^[[H"
       # arrow keys
       "^[[F"

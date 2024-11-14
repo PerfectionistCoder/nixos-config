@@ -36,4 +36,6 @@ with lib;
       }
     ];
   };
+
+  home.file.".zsh/completions".source = ./_funcs;
 }

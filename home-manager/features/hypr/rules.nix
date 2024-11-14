@@ -8,9 +8,6 @@ lib: theme: with theme; {
     "size 1280 720, class:(firefox), title:(Library)"
     "size 1280 720, class:(firefox), title:(Save As)"
 
-    "opacity 1 override, class:(VSCodium)"
-    "noblur, class:(VSCodium)"
-
     "float, class:(kitty)"
     "noborder off, class:(kitty)"
   ];

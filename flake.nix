@@ -109,11 +109,23 @@
         pkgs = nixpkgs.legacyPackages.${system};
       in
       {
-        devShells.qemu = pkgs.mkShell {
-          packages = with pkgs; [ qemu ];
-          shellHook = ''
-            cd ~/Documents
-          '';
+        devShells = {
+          qemu = pkgs.mkShell {
+            packages = with pkgs; [ qemu ];
+            shellHook = ''
+              cd ~/Documents/OpSys
+            '';
+          };
+          gcc = pkgs.mkShell {
+            packages = with pkgs; [
+              libgcc
+              valgrind
+            ];
+            shellHook = ''
+              cd ~/Documents/OpSys/ex1
+              codium .
+            '';
+          };
         };
       }
     ));

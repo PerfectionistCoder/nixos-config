@@ -1,13 +1,9 @@
 {
-  customLib,
   config,
   username,
   ...
 }:
-with customLib;
 {
-  imports = [ /etc/nixos/hardware-configuration.nix ];
-
   users = {
     users = {
       "${username}" = {

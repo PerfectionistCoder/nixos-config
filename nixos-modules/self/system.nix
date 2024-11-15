@@ -8,8 +8,6 @@
     ];
   };
 
-  system.stateVersion = "24.05";
-
   environment.systemPackages = with pkgs; [
     git
     home-manager

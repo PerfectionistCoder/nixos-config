@@ -39,7 +39,7 @@ in
 
           Service = {
             ExecStart = command;
-            Restart = "always";
+            Restart = "on-failure";
             RestartSec = "10";
           };
         };

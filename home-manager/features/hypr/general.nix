@@ -19,13 +19,14 @@ theme: with theme; {
     active_opacity = opacity;
     inactive_opacity = opacity - 3.0e-2;
 
-    "col.shadow" = "rgba(00000000)";
-
     blur = {
       enabled = true;
       noise = 0.0;
       popups = true;
       popups_ignorealpha = opacity - 0.1;
+    };
+    shadow = {
+      enabled = false;
     };
   };
 

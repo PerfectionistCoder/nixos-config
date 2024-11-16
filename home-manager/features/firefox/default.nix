@@ -13,7 +13,6 @@ with lib;
 
   programs.firefox = {
     enable = true;
-    package = inputs.firefox.packages.${pkgs.system}.firefox-bin;
     profiles.default = {
       isDefault = true;
       bookmarks = import ./bookmarks.nix;

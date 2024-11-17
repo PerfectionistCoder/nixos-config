@@ -7,4 +7,6 @@
   hm-clean = "home-manager expire-generations $(date +%X)";
   nix-clean-boot-entries = "sudo /run/current-system/bin/switch-to-configuration boot";
   nix-update = "sudo /run/current-system/sw/bin/nix flake update --flake $NIX_CONFIG_HOME";
+
+  load-ssh-key = "f() { eval $(ssh-agent -s); ssh-add \"$HOME/.ssh/$1\"; }; f";
 }

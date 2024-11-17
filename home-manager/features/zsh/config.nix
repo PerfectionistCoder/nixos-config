@@ -4,10 +4,7 @@ with config.custom.theme;
 ''
   unset zle_bracketed_paste
 
-  local RM_WORDCHARS=(- \/ .)
-  for ch in $RM_WORDCHARS; do
-    WORDCHARS=''${WORDCHARS//"$ch"}
-  done
+  WORDCHARS=._*?~
 
   ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
 

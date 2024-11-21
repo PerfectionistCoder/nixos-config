@@ -14,6 +14,8 @@ with config.custom.theme;
   ZSH_AUTOSUGGEST_MANUAL_REBIND=ture
   ZSH_AUTOSUGGEST_STRATEGY=(completion)
   ZSH_AUTOSUGGEST_CLEAR_WIDGETS=(accept-line kill-line)
+  ZSH_AUTOSUGGEST_ACCEPT_WIDGETS=()
+  ZSH_AUTOSUGGEST_EXECUTE_WIDGETS=()
 ''
 + (optionalString config.custom.features.bat.enable ''
   alias -g -- -h='-h 2>&1 | bat --language=help --style=plain'

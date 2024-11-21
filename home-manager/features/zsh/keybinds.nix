@@ -68,6 +68,7 @@ in
   bindkey '^K' kill-whole-line
   bindkey '^L' clear-terminal
 
-  bindkey '^I' fzf-tab-complete
-  bindkey '^[[Z' fzf-history-widget
+  bindkey '^I' autosuggest-accept
+  bindkey '^[[Z' fzf-tab-complete
+  bindkey '^R' fzf-history-widget
 ''

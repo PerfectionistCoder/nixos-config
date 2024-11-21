@@ -12,7 +12,6 @@ with lib;
       pkgsList = [
         "zsh-autosuggestions"
         "zsh-syntax-highlighting"
-        "zsh-completions"
         {
           name = "zsh-fzf-tab";
           file = "share/fzf-tab/fzf-tab.plugin.zsh";
@@ -38,7 +37,7 @@ with lib;
         ignoreSpace = true;
         ignoreAllDups = true;
       };
-      completionInit = import ./completion.nix;
+      completionInit = import ./completion.nix config lib;
       initExtra = import ./config.nix lib config + import ./keybinds.nix lib;
       shellAliases = import ./aliases.nix;
 

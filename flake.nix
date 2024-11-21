@@ -126,6 +126,18 @@
               codium .
             '';
           };
+          py = pkgs.mkShell {
+            packages = with pkgs; [
+              (pkgs.python312.withPackages (python-pkgs: with python-pkgs; [ ]))
+              poetry
+            ];
+            shellHook = ''
+              export VIRTUAL_ENV_DISABLE_PROMPT=1
+
+              cd /home/laptop/Documents/SePp/poetry-demo
+              codium --profile Python .
+            '';
+          };
         };
       }
     ));

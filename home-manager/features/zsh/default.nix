@@ -32,7 +32,6 @@ with lib;
           "pass *"
           ""
         ];
-        append = true;
         share = true;
         ignoreSpace = true;
         ignoreAllDups = true;

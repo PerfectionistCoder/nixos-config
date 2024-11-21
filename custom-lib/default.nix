@@ -9,23 +9,35 @@ rec {
   readDirFilter =
     path: lambda: (map (name: path + "/${name}") (attrNames (filterAttrs lambda (readDir path))));
   allIn = path: readDirFilter path (_: _: true);
+  allNixIn = path: readDirFilter path (name: value: name != "default.nix" && value != "directory");
   dirsIn = path: readDirFilter path (_: value: value == "directory");
   subDirName = path: last (splitString "/" (toString path));
-  recursiveallIn =
+  recursiveAllIn =
     path:
     flatten (
       attrValues (
         mapAttrs (
-          name: value: if value == "directory" then recursiveallIn (path + "/${name}") else "${path}/${name}"
+          name: value: if value == "directory" then recursiveAllIn (path + "/${name}") else "${path}/${name}"
         ) (readDir path)
       )
     );
 
-  bundleModules =
-    path:
-    (readDirFilter path (name: value: name != "default.nix" && value != "directory"))
-    ++ (allIn (path + "/self"));
+  bundleModules = path: (allNixIn path) ++ (allIn (path + "/self"));
 
+  mkOptionFromSet =
+    set:
+    mapAttrs (
+      name: value:
+      let
+        type = typeOf value;
+      in
+      if type == "string" then
+        mkOption { type = types.str; }
+      else if type == "list" then
+        mkOption { type = with types; listOf str; }
+      else
+        mkOption { type = types.${typeOf value}; }
+    ) set;
   mkOptionsForFiles =
     params:
     with params;

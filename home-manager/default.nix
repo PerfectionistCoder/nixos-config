@@ -9,7 +9,7 @@
 with customLib;
 with lib;
 {
-  imports = bundleModules ./.;
+  imports = bundleModules ./. ++ [ ./theme ];
 
   home.packages = flatten (
     map (
@@ -29,7 +29,7 @@ with lib;
             import subPath pkgs
           else
             throw "Unexpected ${name} file in ${path} directory"
-        ) (recursiveallIn path))
+        ) (recursiveAllIn path))
       else
         [ ]
     ) (dirsIn ./scripts)

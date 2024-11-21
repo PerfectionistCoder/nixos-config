@@ -11,6 +11,7 @@ config: {
   cursor_shape_unfocused = "beam";
   cursor_blink_interval = "0.5";
   cursor_stop_blinking_after = 0;
+  cursor_trail = 100;
 
   scrollback_lines = 10000;
   scrollback_indicator_opacity = 0;

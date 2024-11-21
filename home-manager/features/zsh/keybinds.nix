@@ -35,10 +35,8 @@ let
   );
 in
 ''
-  erase-screen() {
-    clear
-    zle clear-screen
-  }
+  clear-terminal() { tput reset; zle redisplay; }
+  zle -N clear-terminal
   zle -N erase-screen
   kill-whole-line() {
     zle backward-kill-line
@@ -53,6 +51,7 @@ in
 
   ${disable_keys}
 
+  bindkey '^[' send-break
   bindkey '^M' accept-line
   bindkey '^?' backward-delete-char
   bindkey '^H' backward-delete-word
@@ -67,7 +66,9 @@ in
   bindkey '^[[H' beginning-of-line
   bindkey '^[[F' end-of-line
   bindkey '^K' kill-whole-line
+  bindkey '^L' clear-terminal
 
   bindkey '^I' autosuggest-accept
-  bindkey '^L' erase-screen
+  bindkey '^[[Z' fzf-tab-complete
+  bindkey '^R' fzf-history-widget
 ''

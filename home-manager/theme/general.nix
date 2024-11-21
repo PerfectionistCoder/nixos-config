@@ -1,17 +1,5 @@
-{ lib, config, ... }:
-with builtins;
-with lib;
+{ config, customLib, ... }:
 let
-  mkSetOption =
-    set:
-    mapAttrs (
-      name: value:
-      if typeOf value == "string" then
-        mkOption { type = types.str; }
-      else
-        mkOption { type = types.${typeOf value}; }
-    ) set;
-
   theme = rec {
     paletteName = "Catppuccin Frappe";
     flamingo = "eebebe";
@@ -101,7 +89,7 @@ let
 in
 {
   options.custom = {
-    theme = mkSetOption theme;
+    theme = customLib.mkOptionFromSet theme;
   };
   config.custom = {
     inherit theme;

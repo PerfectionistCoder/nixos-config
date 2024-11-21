@@ -15,6 +15,7 @@
     "bat"
     "eww"
     "firefox"
+    "fzf"
     "gpg"
     "gtk"
     "kitty"

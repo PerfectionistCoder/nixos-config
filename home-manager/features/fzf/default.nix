@@ -1,0 +1,6 @@
+{ ... }:
+{
+  program.fzf = {
+    enable = true;
+  };
+}

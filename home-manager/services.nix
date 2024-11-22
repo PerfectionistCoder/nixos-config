@@ -12,10 +12,6 @@ let
       pkg = wl-gammarelay-rs;
       command = "${getExe pkg} run";
     }
-    rec {
-      pkg = eww;
-      command = "${getExe pkg} daemon";
-    }
   ];
 in
 {

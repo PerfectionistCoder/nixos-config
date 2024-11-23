@@ -26,6 +26,8 @@
     "yazi"
     "zsh"
 
+    "rclone"
+
     "fonts"
   ];
 }

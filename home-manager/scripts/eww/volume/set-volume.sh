@@ -1,7 +1,7 @@
 if [ "$1" = "up" ]; then
-  SIGN="+"
+	SIGN="+"
 else
-  SIGN="-"
+	SIGN="-"
 fi
 
 wpctl set-volume -l 1 @DEFAULT_SINK@ $VOLUME_STEP%$SIGN

@@ -5,6 +5,7 @@
     trashy
     nurl
     nixfmt-rfc-style
+    shfmt
   ];
 
   custom = {

@@ -1,7 +1,7 @@
 if [ "$1" = "up" ]; then
-  SIGN=""
+	SIGN=""
 else
-  SIGN="-- -"
+	SIGN="-- -"
 fi
 
 busctl --user call rs.wl-gammarelay / rs.wl.gammarelay UpdateBrightness d ${SIGN}${BRIGHTNESS_STEP}

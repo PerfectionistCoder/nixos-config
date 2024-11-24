@@ -75,7 +75,7 @@
           (if stable then home-manager else home-manager-unstable).lib.homeManagerConfiguration {
             pkgs = getPkgs system stable;
             extraSpecialArgs = {
-              inherit inputs customLib hostName;
+              inherit inputs customLib flakeHostname;
               stable-pkgs = getPkgs system true;
             } // params;
             modules = [
@@ -90,10 +90,10 @@
             map (
               hostPath:
               let
-                hostName = customLib.subDirName hostPath;
+                flakeHostname = customLib.subDirName hostPath;
                 value = (if type == "home-configuration" then mkHomeManager else mkHost) (
                   {
-                    inherit hostName;
+                    inherit flakeHostname;
                     configPath = hostPath + "/${type}.nix";
                   }
                   // import (hostPath + "/params.nix")
@@ -101,7 +101,7 @@
               in
               {
                 inherit value;
-                name = hostName;
+                name = flakeHostname;
               }
             ) (customLib.dirsIn path)
           );

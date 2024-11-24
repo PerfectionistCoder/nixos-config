@@ -1,8 +1,8 @@
-{ hostName, ... }:
+{ flakeHostname, ... }:
 {
   home.sessionVariables = {
     NIX_CONFIG_HOME = "$HOME/.config/nix-config";
-    NIX_HOSTNAME = hostName;
+    FLAKE_HOSTNAME = flakeHostname;
 
     BACKUP_HOME = "$HOME/Backup";
     BACKUP_NAME = "Current";

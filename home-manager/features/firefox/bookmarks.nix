@@ -8,7 +8,7 @@
         bookmarks = [
           {
             name = "NixOS Search";
-            keyword = "nix";
+            keyword = "pkgs";
             url = "https://search.nixos.org/packages";
           }
           {
@@ -40,7 +40,7 @@
       }
       {
         name = "ChatGPT";
-        keyword = "ai";
+        keyword = "gpt";
         url = "https://chatgpt.com/";
       }
     ];

@@ -118,22 +118,6 @@
       in
       {
         devShells = {
-          qemu = pkgs.mkShell {
-            packages = with pkgs; [ qemu ];
-            shellHook = ''
-              cd ~/Documents/OpSys
-            '';
-          };
-          gcc = pkgs.mkShell {
-            packages = with pkgs; [
-              libgcc
-              valgrind
-            ];
-            shellHook = ''
-              cd ~/Documents/OpSys/ex1
-              codium .
-            '';
-          };
           py = pkgs.mkShell {
             packages = with pkgs; [
               (pkgs.python312.withPackages (python-pkgs: with python-pkgs; [ ]))
@@ -142,8 +126,7 @@
             shellHook = ''
               export VIRTUAL_ENV_DISABLE_PROMPT=1
 
-              cd /home/laptop/Documents/SePp/poetry-demo
-              codium --profile Python .
+              codium --profile Python
             '';
           };
         };

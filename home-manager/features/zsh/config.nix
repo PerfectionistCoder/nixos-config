@@ -8,7 +8,7 @@ with config.custom.theme;
 
   unset zle_bracketed_paste
 
-  WORDCHARS='._*?~'
+  export WORDCHARS='._*?'
 
   ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
 

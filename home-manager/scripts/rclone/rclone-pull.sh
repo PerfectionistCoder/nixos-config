@@ -1,5 +1,6 @@
 BACKUP_HOME=${BACKUP_HOME?-'Missing variable BACKUP_HOME'}
 BACKUP_NAME=${BACKUP_NAME?-'Missing variable BACKUP_NAME'}
+remote=${1?-'Missing name of the remote'}
 
 cd $BACKUP_HOME
 if [ -d "$BACKUP_NAME" ] && [ -n "$(ls -A $BACKUP_NAME)" ]; then
@@ -10,7 +11,7 @@ else
 fi
 
 working_dir=/tmp/$$
-rclone sync ${1?-'Missing name of the remote'} $working_dir
+rclone sync $remote $working_dir
 trap "rm -rf $working_dir" EXIT
 cd $working_dir
 

@@ -1,7 +1,8 @@
 BACKUP_HOME=${BACKUP_HOME?-'Missing variable BACKUP_HOME'}
 BACKUP_NAME=${BACKUP_NAME?-'Missing variable BACKUP_NAME'}
-
 backup_dir=$BACKUP_HOME/$BACKUP_NAME
+remote=${1?-'Missing name of remote'}
+key=${2?-'Missing name of gpg key'}
 
 if [ ! -d "$backup_dir" ]; then
   echo Backup directory missing
@@ -23,10 +24,10 @@ for item in *; do
   elif [ -d $item ]; then
     name="$item.tar.gz"
     tar -czf $name $item
-    gpg -o $name.gpg -r ${2?-'Missing name of gpg key'} -e $name
+    gpg -o $name.gpg -r $key -e $name
     rm $name
     mv $name.gpg $WORKING_DIR
   fi
 done
 
-rclone sync $WORKING_DIR ${1?-'Missing name of remote'}
+rclone sync $WORKING_DIR $remote

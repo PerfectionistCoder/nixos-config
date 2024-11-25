@@ -1,5 +1,6 @@
 BACKUP_HOME=${BACKUP_HOME?-'Missing variable BACKUP_HOME'}
 BACKUP_VIEW=${BACKUP_VIEW?-'Missing variable BACKUP_VIEW'}
+archive=${1?-'Missing name of archive'}
 
 cd $BACKUP_HOME
 
@@ -9,4 +10,4 @@ else
 	mkdir $BACKUP_VIEW
 fi
 
-tar --force-local -xzf ${1?-'Missing name of archive'} -C $BACKUP_VIEW
+tar --force-local -xzf $archive -C $BACKUP_VIEW

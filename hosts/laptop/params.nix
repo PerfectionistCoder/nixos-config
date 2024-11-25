@@ -12,6 +12,8 @@
     "vscodium"
     "zsh"
 
+    "rclone"
+
     "gnome"
     "ssh"
   ];

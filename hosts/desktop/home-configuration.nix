@@ -10,7 +10,6 @@
 
   custom = {
     features = {
-      firefox.customCss = true;
       bat.customTheme = true;
     };
 

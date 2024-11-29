@@ -4,7 +4,7 @@ with lib;
   # disable spellcheck
   "layout.spellcheckDefault" = 0;
 
-  # middlemouse paste
+  # disable middlemouse paste
   "middlemouse.paste" = false;
 
   # clean address bar
@@ -18,21 +18,4 @@ with lib;
 
   # autoload extensions
   "extensions.autoDisableScopes" = 0;
-
-  # disable tooltip
-  "ui.tooltip.delay_ms" = -1;
 }
-// (optionalAttrs config.custom.features.firefox.customCss {
-  #theme
-  "browser.theme.content-theme" = 0;
-  "browser.theme.toolbar-theme" = 0;
-  "extensions.activeThemeID" = "firefox-compact-dark@mozilla.org";
-
-  # userChrome
-  "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
-
-  # browser devtool
-  "devtools.toolbox.host" = "window";
-  "devtools.chrome.enabled" = true;
-  "devtools.debugger.remote-enabled" = true;
-})

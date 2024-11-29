@@ -8,10 +8,6 @@
 with builtins;
 with lib;
 {
-  options = {
-    customCss = mkEnableOption "";
-  };
-
   programs.firefox = {
     enable = true;
     package = inputs.firefox.packages.${pkgs.system}.firefox-bin;
@@ -21,8 +17,7 @@ with lib;
       search = import ./search.nix;
     };
   };
-  home.file = mkIf config.custom.features.firefox.customCss {
-    ".mozilla/firefox/default/chrome".source = ./css;
+  home.file = {
     ".mozilla/firefox/default/user.js".text =
       readFile (
         pkgs.fetchFromGitHub {

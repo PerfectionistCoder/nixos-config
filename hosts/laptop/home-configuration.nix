@@ -11,6 +11,7 @@
     evince
     nixfmt-rfc-style
     ungoogled-chromium
+    zoom-us
   ];
 
   custom.defaultShellCommand = "zsh";

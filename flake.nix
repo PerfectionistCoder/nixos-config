@@ -116,16 +116,18 @@
         pkgs = nixpkgs.legacyPackages.${system};
       in
       {
-        devShells = {
-          py = pkgs.mkShell {
-            packages = with pkgs; [
-              (pkgs.python312.withPackages (python-pkgs: with python-pkgs; [ ]))
+        devShells = with pkgs; {
+          py = mkShell {
+            packages = [
+              (python312.withPackages (python-pkgs: with python-pkgs; [ ]))
               poetry
             ];
             shellHook = ''
               export VIRTUAL_ENV_DISABLE_PROMPT=1
 
               codium --profile Python
+
+              exit
             '';
           };
         };

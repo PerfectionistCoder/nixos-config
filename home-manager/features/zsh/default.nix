@@ -9,14 +9,7 @@ with lib;
 {
   programs.zsh =
     let
-      pkgsList = [
-        "zsh-autosuggestions"
-        "zsh-syntax-highlighting"
-        {
-          name = "zsh-fzf-tab";
-          file = "share/fzf-tab/fzf-tab.plugin.zsh";
-        }
-      ];
+      plugins = import ./plugins.nix config lib;
     in
     {
       enable = true;
@@ -36,8 +29,11 @@ with lib;
         ignoreSpace = true;
         ignoreAllDups = true;
       };
-      completionInit = import ./completion.nix config lib;
-      initExtra = import ./config.nix lib config + import ./keybinds.nix lib;
+      completionInit = import ./completion.nix;
+      initExtra =
+        import ./config.nix lib config
+        + import ./keybinds.nix lib
+        + (concatStringsSep "" (map (plugin: "\n" + plugin.config) plugins));
       shellAliases = import ./aliases.nix;
 
       plugins = map (
@@ -52,15 +48,22 @@ with lib;
             file = "share/${nmOrAttr}/${nmOrAttr}.zsh";
           }
         else if type == "set" then
-          nmOrAttr
+          filterAttrs (
+            name: _:
+            elem name [
+              "name"
+              "src"
+              "file"
+            ]
+          ) nmOrAttr
           // {
             name = nmOrAttr.name or nmOrAttr.src.pname;
             src = nmOrAttr.src or pkgs.${nmOrAttr.name};
           }
         else
           throw "Unaccepted zsh plugin package format"
-      ) pkgsList;
+      ) plugins;
     };
 
-  home.file.".zsh/completions".source = ./_funcs;
+  home.file.".zsh/completions".source = ./completions;
 }

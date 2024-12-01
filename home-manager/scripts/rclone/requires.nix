@@ -1,3 +1,1 @@
-pkgs: with pkgs; [
-  rclone
-]
+pkgs: with pkgs; [ rclone ]

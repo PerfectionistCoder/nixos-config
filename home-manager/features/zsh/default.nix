@@ -36,33 +36,11 @@ with lib;
         + (concatStringsSep "" (map (plugin: "\n" + plugin.config) plugins));
       shellAliases = import ./aliases.nix;
 
-      plugins = map (
-        nmOrAttr:
-        let
-          type = typeOf nmOrAttr;
-        in
-        if type == "string" then
-          {
-            name = nmOrAttr;
-            src = pkgs.${nmOrAttr};
-            file = "share/${nmOrAttr}/${nmOrAttr}.zsh";
-          }
-        else if type == "set" then
-          filterAttrs (
-            name: _:
-            elem name [
-              "name"
-              "src"
-              "file"
-            ]
-          ) nmOrAttr
-          // {
-            name = nmOrAttr.name or nmOrAttr.src.pname;
-            src = nmOrAttr.src or pkgs.${nmOrAttr.name};
-          }
-        else
-          throw "Unaccepted zsh plugin package format"
-      ) plugins;
+      plugins = map (plugin: {
+        name = plugin.name or plugin.src.pname;
+        src = plugin.src or pkgs.${plugin.name};
+        file = plugin.file or "share/${plugin.name}/${plugin.name}.zsh";
+      }) plugins;
     };
 
   home.file.".zsh/completions".source = ./completions;

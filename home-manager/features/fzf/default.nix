@@ -24,12 +24,8 @@ let
     "--no-mouse"
   ];
   cfg = {
-    defaultOptions = commonOptions ++ [
-      "--height=-1"
-    ];
-    fullscreenOption = commonOptions ++ [
-      "--no-height"
-    ];
+    defaultOptions = commonOptions ++ [ "--height=-1" ];
+    fullscreenOption = commonOptions ++ [ "--no-height" ];
   };
 in
 {

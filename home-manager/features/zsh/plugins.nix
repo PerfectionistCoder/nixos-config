@@ -25,8 +25,8 @@ with config.custom.features;
   config = ''
     zstyle ':completion:*' menu no
     zstyle ':fzf-tab:*' prefix ""
-    zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls -a $realpath'
     zstyle ':fzf-tab:*' fzf-flags ${concatStringsSep " " fzf.defaultOptions}
+    zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls -a $realpath'
 
     eval "$(fzf --zsh)"
   '';

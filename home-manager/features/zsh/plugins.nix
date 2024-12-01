@@ -6,6 +6,8 @@ with config.custom.features;
     name = "zsh-autosuggestions";
     config = ''
       ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
+  
+      bindkey '^I' autosuggest-accept
     '';
   }
   {
@@ -29,5 +31,8 @@ with config.custom.features;
     zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls -a $realpath'
 
     eval "$(fzf --zsh)"
+      
+    bindkey '^[[Z' fzf-tab-complete
+    bindkey '^R' fzf-history-widget
   '';
 }

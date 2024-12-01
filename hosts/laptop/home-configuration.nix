@@ -2,7 +2,7 @@
 {
   nixpkgs.config.allowUnfree = true;
   home.packages = with pkgs; [
-    gnome.file-roller
+    file-roller
     microsoft-edge
     keepassxc
     libreoffice

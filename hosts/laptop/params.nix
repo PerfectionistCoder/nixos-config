@@ -6,6 +6,7 @@
   features = [
     "dconf"
     "firefox"
+    "fzf"
     "gnome-terminal"
     "gpg"
     "starship"

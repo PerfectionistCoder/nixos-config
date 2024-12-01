@@ -16,11 +16,6 @@
 
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
 
-    firefox = {
-      url = "github:nix-community/flake-firefox-nightly";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     flake-utils.url = "github:numtide/flake-utils";
   };
 
@@ -35,20 +30,32 @@
       ...
     }@inputs:
     let
-      forAllSystems = nixpkgs.lib.genAttrs [
-        "aarch64-linux"
-        "i686-linux"
-        "x86_64-linux"
-        "aarch64-darwin"
-        "x86_64-darwin"
-      ];
       customLib = import ./custom-lib { inherit inputs; };
     in
     with builtins;
     with customLib;
-    {
-      formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-rfc-style);
-    }
+    flake-utils.lib.eachDefaultSystem (
+      system:
+      let
+        pkgs = nixpkgs.legacyPackages.${system};
+      in
+      {
+        formatter = nixpkgs.legacyPackages.${system}.nixfmt-rfc-style;
+        devShells = {
+          py = pkgs.mkShell {
+            packages = with pkgs; [
+              (pkgs.python312.withPackages (python-pkgs: with python-pkgs; [ ]))
+              poetry
+            ];
+            shellHook = ''
+              export VIRTUAL_ENV_DISABLE_PROMPT=1
+
+              codium --profile Python
+            '';
+          };
+        };
+      }
+    )
     // (
       let
         nixosModules = import ./nixos-modules;
@@ -109,28 +116,5 @@
         nixosConfigurations = genConfiguration hostsDir "configuration";
         homeConfigurations = genConfiguration hostsDir "home-configuration";
       }
-    )
-    // (flake-utils.lib.eachDefaultSystem (
-      system:
-      let
-        pkgs = nixpkgs.legacyPackages.${system};
-      in
-      {
-        devShells = with pkgs; {
-          py = mkShell {
-            packages = [
-              (python312.withPackages (python-pkgs: with python-pkgs; [ ]))
-              poetry
-            ];
-            shellHook = ''
-              export VIRTUAL_ENV_DISABLE_PROMPT=1
-
-              codium --profile Python
-
-              exit
-            '';
-          };
-        };
-      }
-    ));
+    );
 }

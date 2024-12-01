@@ -30,7 +30,6 @@ with lib;
 
   environment.gnome.excludePackages =
     with pkgs;
-    with pkgs.gnome;
     [
       orca
 

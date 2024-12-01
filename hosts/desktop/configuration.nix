@@ -1,4 +1,9 @@
-{ config, username, ... }:
+{
+  config,
+  username,
+  pkgs,
+  ...
+}:
 {
   users = {
     users = {
@@ -11,5 +16,11 @@
         useDefaultShell = true;
       };
     };
+  };
+
+  boot.initrd.kernelModules = [ "amdgpu" ];
+  hardware.graphics = {
+    enable = true;
+    extraPackages = with pkgs; [ amdvlk ];
   };
 }

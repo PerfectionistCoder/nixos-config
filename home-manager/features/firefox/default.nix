@@ -10,6 +10,7 @@ with lib;
 {
   programs.firefox = {
     enable = true;
+    policies = import ./policies.nix;
     profiles.default = {
       isDefault = true;
       bookmarks = import ./bookmarks.nix;
@@ -22,8 +23,8 @@ with lib;
         pkgs.fetchFromGitHub {
           owner = "yokoffing";
           repo = "Betterfox";
-          rev = "429abb61f52726b7c6f1675bccca32bbb5359c02";
-          hash = "sha256-CxPZxo9G44lRocNngjfwTBHSqL5dEJ5MNO5Iauoxp2Y=";
+          rev = "09dd87a3abcb15a88798941e5ed74e4aa593108c";
+          hash = "sha256-Uu/a5t74GGvMIJP5tptqbiFiA+x2hw98irPdl8ynGoE=";
         }
         + "/user.js"
       )

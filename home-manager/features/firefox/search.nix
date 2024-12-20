@@ -1,18 +1,12 @@
 {
   force = true;
-  default = "Brave";
+  default = "SearXNG";
   engines = {
-    "Brave" = {
+    "SearXNG" = {
       urls = [
-        { template = "https://search.brave.com/search?q={searchTerms}"; }
-        # {
-        #   template = "https://search.brave.com/api/suggest?q={searchTerms}";
-        #   type = "application/x-suggestions+json";
-        # }
+        { template = "https://search.rhscz.eu/search?q={searchTerms}"; }
       ];
-      iconUpdateURL = "https://brave.com/static-assets/images/brave-favicon.png";
-      updateInterval = 24 * 60 * 60 * 1000;
-      definedAliases = [ "@brave" ];
+      definedAliases = [""];
     };
 
     "Google".metaData.hidden = true;

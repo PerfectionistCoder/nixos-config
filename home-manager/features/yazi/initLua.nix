@@ -1,6 +1,6 @@
 theme: with theme; ''
   require("full-border"):setup {
-  	type = ui.Border.PLAIN,
+    type = ui.Border.PLAIN
   }
 
   require("yamb"):setup {}

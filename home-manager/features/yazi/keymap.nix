@@ -18,12 +18,12 @@ let
       # scroll
       {
         on = "<Up>";
-        run = "plugin --sync arrow --args=-1";
+        run = "plugin arrow --args=-1";
         desc = "Move cursor up";
       }
       {
         on = "<Down>";
-        run = "plugin --sync arrow --args=1";
+        run = "plugin arrow --args=1";
         desc = "Move cursor down";
       }
       {
@@ -190,7 +190,7 @@ let
       }
       {
         on = "p";
-        run = "plugin --sync smart-paste";
+        run = "paste";
         desc = "Paste yanked files into the hovered directory or CWD";
       }
       # delete

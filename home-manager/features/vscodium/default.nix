@@ -22,6 +22,7 @@
       "[nix]" = {
         "editor.defaultFormatter" = "jnoortheen.nix-ide";
       };
+      "rust-analyzer.check.command" = "clippy";
     };
     extensions = with pkgs; [ vscode-extensions.jnoortheen.nix-ide ];
   };

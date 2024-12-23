@@ -17,6 +17,8 @@
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
 
     flake-utils.url = "github:numtide/flake-utils";
+
+    rust-overlay.url = "github:oxalica/rust-overlay";
   };
 
   outputs =
@@ -27,6 +29,7 @@
       home-manager,
       home-manager-unstable,
       flake-utils,
+      rust-overlay,
       ...
     }@inputs:
     let
@@ -37,20 +40,43 @@
     flake-utils.lib.eachDefaultSystem (
       system:
       let
-        pkgs = nixpkgs.legacyPackages.${system};
+        pkgs = import nixpkgs {
+          inherit system;
+          overlays = [
+            (import rust-overlay)
+          ];
+        };
       in
       {
         formatter = nixpkgs.legacyPackages.${system}.nixfmt-rfc-style;
-        devShells = {
-          py = pkgs.mkShell {
-            packages = with pkgs; [
-              (pkgs.python312.withPackages (python-pkgs: with python-pkgs; [ ]))
-              poetry
+        devShells = with pkgs; {
+          rust = mkShell {
+            nativeBuildInputs = [
+              (pkgs.rust-bin.stable.latest.default.override {
+                extensions = [
+                  "rust-src"
+                  "cargo"
+                  "rustc"
+                ];
+              })
+              gcc
+            ];
+
+            RUST_SRC_PATH = "${
+              pkgs.rust-bin.stable.latest.default.override {
+                extensions = [ "rust-src" ];
+              }
+            }/lib/rustlib/src/rust/library";
+
+            buildInputs = [
+              clippy
             ];
             shellHook = ''
-              export VIRTUAL_ENV_DISABLE_PROMPT=1
+              PATH+=":/home/desktop/.cargo/bin"
 
-              codium --profile Python
+              cd ~/Code/rust
+
+              codium --profile Rust .
             '';
           };
         };

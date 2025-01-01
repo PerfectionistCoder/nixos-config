@@ -79,10 +79,10 @@ let
     warning = yellow;
     info = teal;
 
-    window_border = 2;
-    window_gaps = 2;
-    window_padding = 4;
-    window_rounding = 8;
+    window_border = 0;
+    window_gaps = 0;
+    window_padding = 0;
+    window_rounding = 0;
 
     opacity = 0.9;
   };

@@ -4,7 +4,7 @@
   engines = {
     "SearXNG" = {
       urls = [
-        { template = "https://search.rhscz.eu/search?q={searchTerms}"; }
+        { template = "https://search.rhscz.eu/search?q={searchTerms}&language=en"; }
       ];
       definedAliases = [""];
     };

@@ -16,4 +16,7 @@ lib: config: with lib; {
 
   # autoload extensions
   "extensions.autoDisableScopes" = 0;
+
+  # no restore session
+  "browser.sessionstore.resume_from_crash" = false;
 }

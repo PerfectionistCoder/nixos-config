@@ -28,7 +28,7 @@ with config.custom;
       // {
         monitor = "HDMI-A-1, ${toString width}x${toString height}@${toString hz}, 0x0, 1";
         exec-once = [
-          "eww open mainbar; update-volume; update-mute; change-light-mode"
+          "eww open mainbar; update-volume; update-mute"
           "hyprctl dispatch movecursor ${toString (width / 2)} ${toString (height / 2)}"
         ];
       };

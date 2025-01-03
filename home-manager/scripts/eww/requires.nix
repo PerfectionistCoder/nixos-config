@@ -3,5 +3,4 @@ pkgs: with pkgs; [
   networkmanager
   playerctl
   wireplumber
-  wl-gammarelay-rs
 ]

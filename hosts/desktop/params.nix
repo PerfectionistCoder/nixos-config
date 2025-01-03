@@ -23,6 +23,7 @@
     "rofi"
     "starship"
     "vscodium"
+    "wl-nightlight"
     "yazi"
     "zsh"
 

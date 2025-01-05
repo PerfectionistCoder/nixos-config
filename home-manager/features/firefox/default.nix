@@ -1,12 +1,30 @@
 {
   lib,
   pkgs,
-  config,
-  inputs,
   ...
 }:
 with builtins;
 with lib;
+let
+  user-pref =
+    file:
+    concatStrings (
+      mapAttrsToList (
+        name: value:
+        "\nuser_pref(\"${name}\", ${
+          let
+            type = typeOf value;
+          in
+          if type == "int" then
+            toString value
+          else if type == "bool" then
+            boolToString value
+          else
+            "\"${value}\""
+        });"
+      ) file
+    );
+in
 {
   programs.firefox = {
     enable = true;
@@ -28,21 +46,6 @@ with lib;
         }
         + "/user.js"
       )
-      + (concatStrings (
-        mapAttrsToList (
-          name: value:
-          "\nuser_pref(\"${name}\", ${
-            let
-              type = typeOf value;
-            in
-            if type == "int" then
-              toString value
-            else if type == "bool" then
-              boolToString value
-            else
-              "\"${value}\""
-          });"
-        ) (import ./settings.nix lib config)
-      ));
+      + user-pref (import ./settings.nix);
   };
 }

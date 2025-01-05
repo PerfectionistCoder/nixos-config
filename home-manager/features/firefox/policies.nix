@@ -5,7 +5,7 @@
   Cookies = {
     Behavior = "reject";
   };
-  # DisableBuiltinPDFViewer = true;
+  DisableBuiltinPDFViewer = true;
   DisableFeedbackCommands = true;
   DisableEncryptedClientHello = false;
   DisableFirefoxAccounts = true;
@@ -107,7 +107,7 @@
   PostQuantumKeyAgreementEnabled = true;
   PrintingEnabled = false;
   PromptForDownloadLocation = false;
-  RequestedLocales = "en-US";
+  RequestedLocales = "";
   SanitizeOnShutdown = true;
   SearchBar = "unified";
   SearchSuggestEnabled = false;

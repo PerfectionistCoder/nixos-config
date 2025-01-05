@@ -1,4 +1,4 @@
-lib: config: with lib; {
+{
   # disable spellcheck
   "layout.spellcheckDefault" = 0;
 

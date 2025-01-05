@@ -5,6 +5,8 @@ in
 {
   home.packages = [ pkg ];
 
+  xdg.configFile."wl-nightlight/config.ini".source = ./config.ini;
+
   systemd.user.services = {
     wl-nightlight = {
       Install = {

@@ -6,10 +6,12 @@ rustPlatform.buildRustPackage rec {
   src = fetchFromGitHub {
     owner = "PerfectionistCoder";
     repo = "wl-nightlight";
-    rev = "0df38e8642869cb83cbe4ddd72bdf5d74d50d885";
-    hash = "sha256-Mzfg9FX6KD6zxvCzuZb1FLnYqARG65oLWX+IDXjW294=";
+    rev = "d804ba033efbf282529815d8341e285805851972";
+    hash = "sha256-nYKCN/wb7uHA4OySeBKU60KDfbp9whfx9IT1kO4sYEE=";
   };
 
-  cargoHash = "sha256-639GHT3l+yXi8y3N+HhExEZAwBZzvJ7xDpXW1+PQfGI=";
+  cargoLock.lockFile = src + "/Cargo.lock";
   doCheck = false;
+
+  meta.mainProgram = "wl-nightlight";
 }

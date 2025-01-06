@@ -29,7 +29,7 @@ let
   };
 in
 {
-  options = customLib.mkOptionFromSet cfg;
+  options = customLib.mkOptionsFrom.set cfg;
 
   custom.features.fzf = cfg;
 

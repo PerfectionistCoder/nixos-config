@@ -6,52 +6,65 @@ rec {
     system: stable:
     import inputs.${if stable then "nixpkgs" else "nixpkgs-unstable"} { inherit system; };
 
-  readDirFilter =
-    path: lambda: (map (name: path + "/${name}") (attrNames (filterAttrs lambda (readDir path))));
-  allIn = path: readDirFilter path (_: _: true);
-  allNixIn = path: readDirFilter path (name: value: name != "default.nix" && value != "directory");
-  dirsIn = path: readDirFilter path (_: value: value == "directory");
-  subDirName = path: last (splitString "/" (toString path));
-  recursiveAllIn =
-    path:
-    flatten (
-      attrValues (
-        mapAttrs (
-          name: value: if value == "directory" then recursiveAllIn (path + "/${name}") else "${path}/${name}"
-        ) (readDir path)
-      )
-    );
+  getPaths =
+    let
+      readDirFilter =
+        path: lambda: (map (name: path + "/${name}") (attrNames (filterAttrs lambda (readDir path))));
+    in
+    rec {
+      all = path: readDirFilter path (_: _: true);
 
-  bundleModules = path: (allNixIn path) ++ (allIn (path + "/self"));
+      files = path: readDirFilter path (_: value: value == "regualr");
 
-  mkOptionFromSet =
-    set:
-    mapAttrs (
-      name: value:
-      let
-        type = typeOf value;
-      in
-      if type == "string" then
-        mkOption { type = types.str; }
-      else if type == "list" then
-        mkOption { type = with types; listOf str; }
-      else
-        mkOption { type = types.${typeOf value}; }
-    ) set;
-  mkOptionsForFiles =
-    params:
-    with params;
-    mapAttrs (
-      name: _:
-      (
-        {
-          enable = mkEnableOption "";
-        }
-        // (
-          if hasAttrByPath [ "args" ] params then (import (path + "/${name}") args).options or { } else { }
+      dirs = path: readDirFilter path (_: value: value == "directory");
+
+      excludeDefaultAndDirs =
+        path: readDirFilter path (name: value: name != "default.nix" && value != "directory");
+
+      recursive =
+        path:
+        flatten (
+          attrValues (
+            mapAttrs (
+              name: value: if value == "directory" then recursive (path + "/${name}") else "${path}/${name}"
+            ) (readDir path)
+          )
+        );
+
+      bundleModules = path: (excludeDefaultAndDirs path) ++ (all (path + "/self"));
+    };
+
+  getBaseName = path: last (splitString "/" (toString path));
+
+  mkOptionsFrom = {
+    set =
+      set:
+      mapAttrs (
+        name: value:
+        let
+          type = typeOf value;
+        in
+        if type == "string" then
+          mkOption { type = types.str; }
+        else if type == "list" then
+          mkOption { type = with types; listOf str; }
+        else
+          mkOption { type = types.${typeOf value}; }
+      ) set;
+
+    files =
+      path: args:
+      mapAttrs (
+        name: _:
+        (
+          {
+            enable = mkEnableOption "";
+          }
+          // (if args != { } then (import (path + "/${name}") args).options or { } else { })
         )
-      )
-    ) (readDir path);
+      ) (readDir path);
+  };
+  
   enableOptions =
     list:
     listToAttrs (
@@ -62,8 +75,10 @@ rec {
         };
       }) list
     );
+
   filterNonExistingOption =
     options: list: intersectLists (mapAttrsToList (name: _: name) options) list;
+
   mergeConfigs =
     options: path: args:
     mkMerge (
@@ -76,8 +91,8 @@ rec {
             [ (filterAttrs (name: _: name != "imports" && name != "options") module) ] ++ imports
           );
         in
-        mkIf (options.${subDirName option}.enable) config
-      ) (dirsIn path)
+        mkIf (options.${getBaseName option}.enable) config
+      ) (getPaths.dirs path)
     );
 
   hideDesktopEntries =

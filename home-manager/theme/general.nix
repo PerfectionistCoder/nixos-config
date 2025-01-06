@@ -89,7 +89,7 @@ let
 in
 {
   options.custom = {
-    theme = customLib.mkOptionFromSet theme;
+    theme = customLib.mkOptionsFrom.set theme;
   };
   config.custom = {
     inherit theme;

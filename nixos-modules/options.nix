@@ -7,7 +7,7 @@
 with customLib;
 {
   options.custom = {
-    features = mkOptionsForFiles { path = ./features; };
+    features = mkOptionsFrom.files ./features { };
   };
 
   config = mergeConfigs config.custom.features ./features args;

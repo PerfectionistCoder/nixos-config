@@ -122,7 +122,7 @@
             map (
               hostPath:
               let
-                flakeHostname = customLib.subDirName hostPath;
+                flakeHostname = customLib.getBaseName hostPath;
                 value = (if type == "home-configuration" then mkHomeManager else mkHost) (
                   {
                     inherit flakeHostname;
@@ -135,7 +135,7 @@
                 inherit value;
                 name = flakeHostname;
               }
-            ) (customLib.dirsIn path)
+            ) (customLib.getPaths.dirs path)
           );
       in
       {

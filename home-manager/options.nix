@@ -9,11 +9,8 @@ with customLib;
 with lib;
 {
   options.custom = {
-    features = mkOptionsForFiles {
-      inherit args;
-      path = ./features;
-    };
-    scripts = mkOptionsForFiles { path = ./scripts; };
+    features = mkOptionsFrom.files ./features args;
+    scripts = mkOptionsFrom.files ./scripts { };
 
     defaultShellCommand = mkOption {
       type = types.str;

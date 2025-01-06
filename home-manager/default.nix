@@ -9,19 +9,19 @@
 with customLib;
 with lib;
 {
-  imports = bundleModules ./. ++ [ ./theme ];
+  imports = getPaths.bundleModules ./. ++ [ ./theme ];
 
   home.packages = flatten (
     map (
       path:
       let
-        name = subDirName path;
+        name = getBaseName path;
       in
       if config.custom.scripts.${name}.enable then
         (map (
           subPath:
           let
-            name = subDirName subPath;
+            name = getBaseName subPath;
           in
           if hasSuffix ".sh" name then
             pkgs.writeShellScriptBin (removeSuffix ".sh" name) (readFile subPath)
@@ -29,10 +29,10 @@ with lib;
             import subPath pkgs
           else
             throw "Unexpected ${name} file in ${path} directory"
-        ) (recursiveAllIn path))
+        ) (getPaths.recursive path))
       else
         [ ]
-    ) (dirsIn ./scripts)
+    ) (getPaths.dirs ./scripts)
   );
 
   custom = {

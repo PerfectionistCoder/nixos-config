@@ -1,1 +1,1 @@
-{ customLib, ... }: with customLib; { imports = allNixIn ./.; }
+{ customLib, ... }: with customLib; { imports = getPaths.excludeDefaultAndDirs ./.; }

@@ -4,9 +4,10 @@
   features,
   ...
 }:
-with customLib;
 {
-  imports = bundleModules ./.;
+  imports = customLib.getPaths.bundleModules ./.;
 
-  custom.features = enableOptions (filterNonExistingOption config.custom.features features);
+  custom.features = customLib.enableOptionsFromList (
+    customLib.filterSetByList config.custom.features features
+  );
 }

@@ -1,1 +1,4 @@
-{ customLib, ... }: with customLib; { imports = getPaths.excludeDefaultAndDirs ./.; }
+{ customLib, ... }:
+{
+  imports = customLib.getPaths.excludeDefaultAndDirs ./.;
+}

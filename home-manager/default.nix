@@ -6,22 +6,21 @@
   features,
   ...
 }:
-with customLib;
 with lib;
 {
-  imports = getPaths.bundleModules ./. ++ [ ./theme ];
+  imports = customLib.getPaths.bundleModules ./. ++ [ ./theme ];
 
   home.packages = flatten (
     map (
       path:
       let
-        name = getBaseName path;
+        name = customLib.getBaseName path;
       in
       if config.custom.scripts.${name}.enable then
         (map (
           subPath:
           let
-            name = getBaseName subPath;
+            name = customLib.getBaseName subPath;
           in
           if hasSuffix ".sh" name then
             pkgs.writeShellScriptBin (removeSuffix ".sh" name) (readFile subPath)
@@ -29,18 +28,22 @@ with lib;
             import subPath pkgs
           else
             throw "Unexpected ${name} file in ${path} directory"
-        ) (getPaths.recursive path))
+        ) (customLib.getPaths.recursive path))
       else
         [ ]
-    ) (getPaths.dirs ./scripts)
+    ) (customLib.getPaths.dirs ./scripts)
   );
 
   custom = {
-    features = enableOptions (filterNonExistingOption config.custom.features features);
-    scripts = enableOptions ((filterNonExistingOption config.custom.scripts features) ++ [ "common" ]);
+    features = customLib.enableOptionsFromList (
+      customLib.filterSetByList config.custom.features features
+    );
+    scripts = customLib.enableOptionsFromList (
+      (customLib.filterSetByList config.custom.scripts features) ++ [ "common" ]
+    );
   };
 
   xdg = {
-    desktopEntries = { } // (with config.custom.features; hideDesktopEntries ([ "nixos-manual" ]));
+    desktopEntries = { } // (customLib.hideDesktopEntries ([ "nixos-manual" ]));
   };
 }

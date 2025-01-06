@@ -65,7 +65,7 @@ rec {
       ) (readDir path);
   };
   
-  enableOptions =
+  enableOptionsFromList =
     list:
     listToAttrs (
       map (option: {
@@ -76,7 +76,7 @@ rec {
       }) list
     );
 
-  filterNonExistingOption =
+  filterSetByList =
     options: list: intersectLists (mapAttrsToList (name: _: name) options) list;
 
   mergeConfigs =

@@ -5,12 +5,11 @@
   config,
   ...
 }@args:
-with customLib;
 with lib;
 {
   options.custom = {
-    features = mkOptionsFrom.files ./features args;
-    scripts = mkOptionsFrom.files ./scripts { };
+    features = customLib.mkOptionsFrom.files ./features args;
+    scripts = customLib.mkOptionsFrom.files ./scripts { };
 
     defaultShellCommand = mkOption {
       type = types.str;
@@ -18,5 +17,5 @@ with lib;
     };
   };
 
-  config = mergeConfigs config.custom.features ./features args;
+  config = customLib.mergeConfigs config.custom.features ./features args;
 }

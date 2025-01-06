@@ -36,7 +36,6 @@
       customLib = import ./custom-lib { inherit inputs; };
     in
     with builtins;
-    with customLib;
     flake-utils.lib.eachDefaultSystem (
       system:
       let
@@ -49,10 +48,10 @@
       in
       {
         formatter = nixpkgs.legacyPackages.${system}.nixfmt-rfc-style;
-        devShells = with pkgs; {
-          rust = mkShell {
-            nativeBuildInputs = [
-              (pkgs.rust-bin.stable.latest.default.override {
+        devShells = {
+          rust = pkgs.mkShell {
+            nativeBuildInputs = with pkgs; [
+              (rust-bin.stable.latest.default.override {
                 extensions = [
                   "rust-src"
                   "cargo"
@@ -68,7 +67,7 @@
               }
             }/lib/rustlib/src/rust/library";
 
-            buildInputs = [
+            buildInputs = with pkgs; [
               clippy
             ];
             shellHook = ''
@@ -92,7 +91,7 @@
           params:
           with params;
           (if stable then nixpkgs else nixpkgs-unstable).lib.nixosSystem {
-            pkgs = getPkgs system stable;
+            pkgs = customLib.getPkgs system stable;
             specialArgs = {
               inherit inputs customLib;
             } // params;
@@ -105,10 +104,10 @@
           params:
           with params;
           (if stable then home-manager else home-manager-unstable).lib.homeManagerConfiguration {
-            pkgs = getPkgs system stable;
+            pkgs = customLib.getPkgs system stable;
             extraSpecialArgs = {
               inherit inputs customLib flakeHostname;
-              stable-pkgs = getPkgs system true;
+              stable-pkgs = customLib.getPkgs system true;
             } // params;
             modules = [
               configPath

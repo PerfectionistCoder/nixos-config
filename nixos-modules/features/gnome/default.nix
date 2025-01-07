@@ -28,54 +28,52 @@ with lib;
   services.avahi.enable = false;
   services.geoclue2.enable = false;
 
-  environment.gnome.excludePackages =
-    with pkgs;
-    [
-      orca
+  environment.gnome.excludePackages = with pkgs; [
+    orca
 
-      # adwaita-icon-theme
-      # gnome-backgrounds
-      # gnome-bluetooth
-      gnome-color-manager
-      # gnome-control-center
-      gnome-shell-extensions
-      gnome-tour
-      gnome-user-docs
-      # glib # for gsettings program
-      gnome-menus
-      # gtk3.out # for gtk-launch program
-      # xdg-user-dirs # Update user dirs as described in https://freedesktop.org/wiki/Software/xdg-user-dirs/
+    # adwaita-icon-theme
+    # gnome-backgrounds
+    # gnome-bluetooth
+    gnome-color-manager
+    # gnome-control-center
+    gnome-shell-extensions
+    gnome-tour
+    gnome-user-docs
+    # glib # for gsettings program
+    gnome-menus
+    # gtk3.out # for gtk-launch program
+    # xdg-user-dirs # Update user dirs as described in https://freedesktop.org/wiki/Software/xdg-user-dirs/
 
-      baobab # Disk usage analyzer
-      epiphany
-      gnome-text-editor
-      gnome-calculator
-      gnome-calendar
-      gnome-characters
-      gnome-clocks
-      gnome-console
-      gnome-contacts
-      gnome-font-viewer
-      gnome-logs
-      gnome-maps
-      gnome-music
-      gnome-system-monitor
-      gnome-weather
-      loupe # image viewer
-      # nautilus
-      gnome-connections
-      simple-scan
-      snapshot # camera
-      totem # video player
-      yelp # help viewer
+    baobab # Disk usage analyzer
+    epiphany
+    gnome-text-editor
+    gnome-calculator
+    gnome-calendar
+    gnome-characters
+    gnome-clocks
+    gnome-console
+    gnome-contacts
+    gnome-font-viewer
+    gnome-logs
+    gnome-maps
+    gnome-music
+    gnome-system-monitor
+    gnome-weather
+    loupe # image viewer
+    # nautilus
+    gnome-connections
+    simple-scan
+    snapshot # camera
+    totem # video player
+    yelp # help viewer
 
-      evince
-      file-roller # Archive manager
-      geary
-      gnome-disk-utility
-      seahorse
-      sushi # nautilus previewer
-    ];
+    evince
+    file-roller # Archive manager
+    geary
+    gnome-disk-utility
+    seahorse
+    sushi # nautilus previewer
+  ];
 
   services.xserver.excludePackages = [ pkgs.xterm ];
 }

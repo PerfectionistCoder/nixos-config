@@ -56,15 +56,13 @@ rec {
       path: args:
       mapAttrs (
         name: _:
-        (
-          {
-            enable = mkEnableOption "";
-          }
-          // (if args != { } then (import (path + "/${name}") args).options or { } else { })
-        )
+        {
+          enable = mkEnableOption "";
+        }
+        // (if args != { } then (import (path + "/${name}") args).options or { } else { })
       ) (readDir path);
   };
-  
+
   enableOptionsFromList =
     list:
     listToAttrs (
@@ -76,8 +74,7 @@ rec {
       }) list
     );
 
-  filterSetByList =
-    options: list: intersectLists (mapAttrsToList (name: _: name) options) list;
+  filterSetByList = options: list: intersectLists (mapAttrsToList (name: _: name) options) list;
 
   mergeConfigs =
     options: path: args:

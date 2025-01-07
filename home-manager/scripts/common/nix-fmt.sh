@@ -1,1 +1,1 @@
-cd $NIX_CONFIG_HOME && nix fmt
+nix fmt $NIXOS_CONFIG_HOME

@@ -18,7 +18,13 @@
     };
   };
 
-  boot.initrd.kernelModules = [ "amdgpu" ];
+  boot = {
+    initrd.kernelModules = [ "amdgpu" ];
+    tmp = {
+      useTmpfs = true;
+    };
+  };
+
   hardware.graphics = {
     enable = true;
     extraPackages = with pkgs; [ amdvlk ];

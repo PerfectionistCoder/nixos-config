@@ -6,7 +6,7 @@
 with builtins;
 with lib;
 let
-  user-pref =
+  generateUserPref =
     file:
     concatStrings (
       mapAttrsToList (
@@ -46,6 +46,6 @@ in
         }
         + "/user.js"
       )
-      + user-pref (import ./settings.nix);
+      + generateUserPref (import ./settings.nix);
   };
 }

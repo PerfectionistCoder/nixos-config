@@ -1,8 +1,6 @@
 {
-  # disable spellcheck
   "layout.spellcheckDefault" = 0;
 
-  # disable middlemouse paste
   "middlemouse.paste" = false;
 
   # clean address bar
@@ -19,4 +17,9 @@
 
   # no restore session
   "browser.sessionstore.resume_from_crash" = false;
+
+  "browser.startup.homepage" = "about:home";
+
+  # hide custom fonts
+  "layout.css.font-visibility" = 1;
 }

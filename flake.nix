@@ -16,8 +16,6 @@
 
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
 
-    flake-utils.url = "github:numtide/flake-utils";
-
     rust-overlay.url = "github:oxalica/rust-overlay";
   };
 
@@ -34,9 +32,16 @@
     }@inputs:
     let
       customLib = import ./custom-lib { inherit inputs; };
+      forAllSystems = nixpkgs.lib.genAttrs [
+        "aarch64-linux"
+        "i686-linux"
+        "x86_64-linux"
+        "aarch64-darwin"
+        "x86_64-darwin"
+      ];
     in
     with builtins;
-    flake-utils.lib.eachDefaultSystem (
+    forAllSystems (
       system:
       let
         pkgs = import nixpkgs {
@@ -85,6 +90,7 @@
       let
         nixosModules = import ./nixos-modules;
         homeManagerModules = import ./home-manager;
+
         hostsDir = ./hosts;
 
         mkHost =

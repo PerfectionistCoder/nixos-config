@@ -13,6 +13,7 @@
     "hypr"
 
     "bat"
+    "cursor"
     "eww"
     "firefox"
     "fzf"

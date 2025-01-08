@@ -1,4 +1,9 @@
-{ hostCfg, username, ... }:
+{
+  hostCfg,
+  username,
+  shared,
+  ...
+}@args:
 {
   traits = [
     "defaultUser"
@@ -34,11 +39,7 @@
         };
 
         home-manager = {
-          users."${username}" = {
-            programs.firefox = {
-              enable = true;
-            };
-          };
+          users."${username}" = (shared args).firefox;
         };
       };
   };

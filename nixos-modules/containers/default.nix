@@ -5,8 +5,9 @@
   username,
   customLib,
   home-manager,
+  shared,
   ...
-}:
+}@args:
 with lib;
 let
   hostCfg = config;
@@ -83,7 +84,7 @@ in
       let
         name = removeSuffix ".nix" (customLib.getBaseName template);
         username = name + "-user";
-        attrset = import ./${customLib.getBaseName template} { inherit hostCfg username; };
+        attrset = import ./${customLib.getBaseName template} (args // { inherit hostCfg username; });
       in
       {
         inherit name;

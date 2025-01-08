@@ -85,6 +85,8 @@
       let
         nixosModules = import ./nixos-modules;
         homeManagerModules = import ./home-manager;
+        sharedModules = import ./shared;
+
         hostsDir = ./hosts;
 
         mkHost =
@@ -95,6 +97,7 @@
             specialArgs = {
               inherit inputs customLib;
               home-manager = if stable then home-manager else home-manager-unstable;
+              shared = sharedModules;
             } // params;
             modules = [
               configPath
@@ -109,6 +112,7 @@
             extraSpecialArgs = {
               inherit inputs customLib flakeHostname;
               stable-pkgs = customLib.getPkgs system true;
+              shared = sharedModules;
             } // params;
             modules = [
               configPath

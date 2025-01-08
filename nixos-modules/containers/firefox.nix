@@ -14,6 +14,8 @@
           extraPackages = hostCfg.hardware.graphics.extraPackages;
         };
 
+        services.pipewire.enable = true;
+
         home-manager = {
           users."${username}" = {
             programs.firefox = {

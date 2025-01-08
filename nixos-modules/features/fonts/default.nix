@@ -1,21 +1,17 @@
 { pkgs, ... }:
 {
   fonts = {
-    fontDir.enable = true;
     packages = with pkgs; [
+      (ibm-plex.override { families = [ "sans" ]; })
       cascadia-code
-      noto-fonts-cjk-sans
-      noto-fonts-cjk-serif
     ];
     fontconfig = {
       defaultFonts = {
         sansSerif = [
-          "Noto Sans CJK HK"
+          "IBM Plex Sans"
         ];
-        serif = [ "Noto Serif CJK HK" ];
         monospace = [
           "Cascadia Mono NF"
-          "Noto Sans Mono CJK HK"
         ];
       };
     };

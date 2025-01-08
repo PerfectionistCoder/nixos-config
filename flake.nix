@@ -94,6 +94,7 @@
             pkgs = customLib.getPkgs system stable;
             specialArgs = {
               inherit inputs customLib;
+              home-manager = if stable then home-manager else home-manager-unstable;
             } // params;
             modules = [
               configPath

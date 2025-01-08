@@ -35,34 +35,37 @@ let
   );
 in
 {
-  bind = [
-    "$mod, Return, exec, [float; center] $terminal"
-    "$mod, Super_L, exec, apps-launcher"
-    "$mod, E, exec, [float; center; size 1280 720] $terminal yazi"
-    "$mod+SHIFT, Q, killactive"
+  bind =
+    [
+      "$mod, Return, exec, [float; center] $terminal"
+      "$mod, Super_L, exec, apps-launcher"
+      "$mod, E, exec, [float; center; size 1280 720] $terminal yazi"
+      "$mod+SHIFT, Q, killactive"
 
-    "$mod, Space, exec, hyprctl dispatch togglefloating && hyprctl dispatch centerwindow"
+      "$mod, Space, exec, hyprctl dispatch togglefloating && hyprctl dispatch centerwindow"
 
-    "ALT, Tab, exec, hyprctl dispatch focuscurrentorlast && hyprctl dispatch alterzorder top"
+      "ALT, Tab, exec, hyprctl dispatch focuscurrentorlast && hyprctl dispatch alterzorder top"
 
-    "$mod, N, workspace, empty"
+      "$mod, N, workspace, empty"
 
-    "$mod, Page_Down, ${switchWorkspace "+"}"
-    "$mod, Page_Up, ${switchWorkspace "-"}"
-    "$mod, mouse_up, ${switchWorkspace "+"}"
-    "$mod, mouse_down, ${switchWorkspace "-"}"
+      "$mod, Page_Down, ${switchWorkspace "+"}"
+      "$mod, Page_Up, ${switchWorkspace "-"}"
+      "$mod, mouse_up, ${switchWorkspace "+"}"
+      "$mod, mouse_down, ${switchWorkspace "-"}"
 
-    "$mod+SHIFT, Page_Down, movetoworkspace, +1"
-    "$mod+SHIFT, Page_Up, movetoworkspace, -1"
-    "$mod+SHIFT, mouse_up, movetoworkspace, +1"
-    "$mod+SHIFT, mouse_down, movetoworkspace, -1"
+      "$mod+SHIFT, Page_Down, movetoworkspace, +1"
+      "$mod+SHIFT, Page_Up, movetoworkspace, -1"
+      "$mod+SHIFT, mouse_up, movetoworkspace, +1"
+      "$mod+SHIFT, mouse_down, movetoworkspace, -1"
 
-    ", XF86AudioMute, exec, toogle-mute"
+      ", XF86AudioMute, exec, toogle-mute"
 
-    ", XF86AudioPrev, exec, playerctl previous"
-    ", XF86AudioPlay, exec, playerctl play-pause"
-    ", XF86AudioNext, exec, playerctl next"
-  ] ++ windowBinds ++ workspaceBinds;
+      ", XF86AudioPrev, exec, playerctl previous"
+      ", XF86AudioPlay, exec, playerctl play-pause"
+      ", XF86AudioNext, exec, playerctl next"
+    ]
+    ++ windowBinds
+    ++ workspaceBinds;
 
   binde = [
     "$mod+CTRL, Left, resizeactive, -$resize_step 0"

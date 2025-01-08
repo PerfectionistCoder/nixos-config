@@ -1,0 +1,26 @@
+{ hostCfg, username, ... }:
+{
+  traits = [
+    "defaultUser"
+    "homeManager"
+    "wayland"
+  ];
+  container = {
+    config =
+      { ... }:
+      {
+        hardware.graphics = {
+          enable = true;
+          extraPackages = hostCfg.hardware.graphics.extraPackages;
+        };
+
+        home-manager = {
+          users."${username}" = {
+            programs.firefox = {
+              enable = true;
+            };
+          };
+        };
+      };
+  };
+}

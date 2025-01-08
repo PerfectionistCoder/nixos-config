@@ -6,7 +6,7 @@ with config.custom.features;
     name = "zsh-autosuggestions";
     config = ''
       ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
-  
+
       bindkey '^I' autosuggest-accept
     '';
   }

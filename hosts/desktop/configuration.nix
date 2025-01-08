@@ -1,13 +1,13 @@
 {
-  config,
-  username,
   pkgs,
+  username,
   ...
 }:
 {
   users = {
     users = {
       "${username}" = {
+        uid = 1000;
         isNormalUser = true;
         extraGroups = [
           "networkmanager"

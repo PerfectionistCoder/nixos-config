@@ -6,7 +6,7 @@
       urls = [
         { template = "https://search.rhscz.eu/search?q={searchTerms}&language=en"; }
       ];
-      definedAliases = [""];
+      definedAliases = [ "" ];
     };
 
     "Google".metaData.hidden = true;

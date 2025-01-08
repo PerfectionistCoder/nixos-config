@@ -1,5 +1,4 @@
-if [[ $1 == "--raw" ]]; then
-  shift
+if [[ $1 == -* ]]; then
   sudo /run/current-system/sw/bin/nixos-rebuild $*
 else
   cmd=$1

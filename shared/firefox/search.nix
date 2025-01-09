@@ -1,12 +1,12 @@
-{
+rec {
   force = true;
   default = "SearXNG";
+  privateDefault = default;
   engines = {
     "SearXNG" = {
       urls = [
         { template = "https://search.rhscz.eu/search?q={searchTerms}&language=en"; }
       ];
-      definedAliases = [ "" ];
     };
 
     "Google".metaData.hidden = true;

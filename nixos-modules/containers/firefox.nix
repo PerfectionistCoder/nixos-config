@@ -1,4 +1,5 @@
 {
+  pkgs,
   hostCfg,
   username,
   shared,
@@ -6,13 +7,13 @@
 }@args:
 {
   traits = [
-    "defaultUser"
+    "autoLogin"
     "homeManager"
     "wayland"
   ];
   container = {
     config =
-      { pkgs, ... }:
+      { ... }:
       {
         hardware.graphics = {
           enable = true;
@@ -37,10 +38,7 @@
             };
           };
         };
-
-        home-manager = {
-          users."${username}" = (shared args).firefox;
-        };
       };
   };
+  home-manager = (shared args).firefox;
 }

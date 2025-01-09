@@ -8,40 +8,43 @@
   shared,
   ...
 }@args:
+with builtins;
 with lib;
 let
   hostCfg = config;
   userUid = hostCfg.users.users."${username}".uid;
 
-  traits = username: {
-    base = {
-      config =
-        { ... }:
-        {
-          nixpkgs.pkgs = mkForce pkgs;
-          system.stateVersion = hostCfg.system.stateVersion;
+  baseCfg = username: {
+    config =
+      { ... }:
+      {
+        nixpkgs.pkgs = mkForce pkgs;
+        system.stateVersion = hostCfg.system.stateVersion;
+
+        users = {
+          mutableUsers = false;
+          users = {
+            "${username}" = {
+              uid = userUid;
+              password = "";
+              extraGroups = [ "wheel" ];
+              isNormalUser = true;
+              home = "/home";
+            };
+          };
         };
-    };
-    defaultUser = {
+      };
+  };
+
+  traits = {
+    autoLogin = username: {
       config =
         { ... }:
         {
           services.getty.autologinUser = username;
-          users = {
-            mutableUsers = false;
-            users = {
-              root.password = "";
-              "${username}" = {
-                uid = userUid;
-                password = "";
-                isNormalUser = true;
-                home = "/home";
-              };
-            };
-          };
         };
     };
-    homeManager = {
+    homeManager = username: {
       config =
         { ... }:
         {
@@ -76,20 +79,46 @@ let
         };
     };
   };
+
+  toContainer = trait: username: if typeOf trait == "lambda" then trait username else trait;
 in
 {
-  containers = listToAttrs (
-    map (
-      template:
-      let
-        name = removeSuffix ".nix" (customLib.getBaseName template);
-        username = name + "-user";
-        attrset = import ./${customLib.getBaseName template} (args // { inherit hostCfg username; });
-      in
-      {
-        inherit name;
-        value = mkMerge ((attrValues (traits username)) ++ [ attrset.container ]);
-      }
-    ) (customLib.getPaths.excludeDefaultAndDirs ./.)
-  );
+  options = {
+    containers = mkOption {
+      apply = str: (_: _) str;
+    };
+  };
+  config = {
+    containers = listToAttrs (
+      map (
+        template:
+        let
+          name = removeSuffix ".nix" (customLib.getBaseName template);
+          username = name + "-user";
+          attrset = import ./${customLib.getBaseName template} (args // { inherit hostCfg username; });
+          value = mkMerge (
+            (map (trait: toContainer trait username) (
+              attrValues (filterAttrs (name: _: elem name attrset.traits) traits)
+            ))
+            ++ [
+              attrset.container
+              {
+                config =
+                  { ... }:
+                  {
+                    home-manager = {
+                      users."${username}" = attrset.home-manager;
+                    };
+                  };
+              }
+              (baseCfg username)
+            ]
+          );
+        in
+        {
+          inherit name value;
+        }
+      ) (customLib.getPaths.excludeDefaultAndDirs ./.)
+    );
+  };
 }

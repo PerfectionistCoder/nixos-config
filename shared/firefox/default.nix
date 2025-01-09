@@ -1,6 +1,7 @@
 {
   lib,
   pkgs,
+  inputs,
   ...
 }:
 with builtins;
@@ -33,6 +34,9 @@ in
       isDefault = true;
       bookmarks = import ./bookmarks.nix;
       search = import ./search.nix;
+      extensions = with inputs.firefox-addons.packages.${pkgs.system}; [
+        ublock-origin
+      ];
     };
   };
   home.file = {

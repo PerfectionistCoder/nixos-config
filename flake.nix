@@ -16,17 +16,17 @@
 
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
 
+    firefox-addons.url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+
     rust-overlay.url = "github:oxalica/rust-overlay";
   };
 
   outputs =
     {
-      self,
       nixpkgs,
       nixpkgs-unstable,
       home-manager,
       home-manager-unstable,
-      flake-utils,
       rust-overlay,
       ...
     }@inputs:

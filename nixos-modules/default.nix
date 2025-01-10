@@ -5,7 +5,11 @@
   ...
 }:
 {
-  imports = customLib.getPaths.bundleModules ./. ++ [ ./containers ];
+  imports = [
+    ./base.nix
+    ./options.nix
+    ./containers
+  ];
 
   custom.features = customLib.enableOptionsFromList (
     customLib.filterSetByList config.custom.features features

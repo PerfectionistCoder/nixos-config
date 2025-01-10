@@ -30,8 +30,6 @@ rec {
             ) (readDir path)
           )
         );
-
-      bundleModules = path: (excludeDefaultAndDirs path) ++ (all (path + "/self"));
     };
 
   getBaseName = path: last (splitString "/" (toString path));

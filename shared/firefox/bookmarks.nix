@@ -34,6 +34,15 @@
         ];
       }
       {
+        name = "GitHub";
+        bookmarks = [
+          {
+            name = "Home Page";
+            url = "https://github.com/";
+          }
+        ];
+      }
+      {
         name = "Hyprland Wiki";
         url = "https://wiki.hyprland.org/";
       }

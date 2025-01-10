@@ -8,7 +8,6 @@
 {
   traits = [
     "autoLogin"
-    "hardwareAccelerate"
     "homeManager"
     "wayland"
   ];

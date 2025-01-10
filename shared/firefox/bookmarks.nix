@@ -37,7 +37,7 @@
         name = "GitHub";
         bookmarks = [
           {
-            name = "Home Page";
+            name = "GitHub";
             url = "https://github.com/";
           }
         ];

@@ -1,17 +1,14 @@
 {
-  config,
+  pkgs,
   customLib,
   features,
   ...
-}:
+}@args:
 {
   imports = [
     ./self.nix
-    ./options.nix
     ./containers
   ];
 
-  custom.features = customLib.enableOptionsFromList (
-    customLib.filterSetByList config.custom.features features
-  );
+  config = customLib.mergeConfigs features ./features args;
 }

@@ -5,7 +5,7 @@
   config,
   features,
   ...
-}:
+}@args:
 with lib;
 {
   imports = [
@@ -20,7 +20,7 @@ with lib;
       let
         name = customLib.getBaseName path;
       in
-      if config.custom.scripts.${name}.enable then
+      if (elem name features || name == "common") then
         (map (
           subPath:
           let
@@ -37,15 +37,6 @@ with lib;
         [ ]
     ) (customLib.getPaths.dirs ./scripts)
   );
-
-  custom = {
-    features = customLib.enableOptionsFromList (
-      customLib.filterSetByList config.custom.features features
-    );
-    scripts = customLib.enableOptionsFromList (
-      (customLib.filterSetByList config.custom.scripts features) ++ [ "common" ]
-    );
-  };
 
   xdg = {
     desktopEntries = { } // (customLib.hideDesktopEntries ([ "nixos-manual" ]));

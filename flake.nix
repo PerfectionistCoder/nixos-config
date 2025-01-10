@@ -88,8 +88,8 @@
     )
     // (
       let
-        nixosModules = import ./nixos-modules;
-        homeManagerModules = import ./home-manager;
+        nixosModules = ./nixos-modules;
+        homeManagerModules = ./home-manager;
         sharedModules = import ./shared;
 
         hostsDir = ./hosts;

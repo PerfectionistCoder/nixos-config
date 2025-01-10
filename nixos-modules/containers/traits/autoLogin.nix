@@ -1,8 +1,6 @@
 { username, ... }:
 {
-  config =
-    { ... }:
-    {
-      services.getty.autologinUser = username;
-    };
+  config = {
+    services.getty.autologinUser = username;
+  };
 }

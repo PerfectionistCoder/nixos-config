@@ -75,19 +75,29 @@ rec {
   filterSetByList = options: list: intersectLists (mapAttrsToList (name: _: name) options) list;
 
   mergeConfigs =
-    options: path: args:
+    list: path: args:
     mkMerge (
-      map (
-        option:
-        let
-          module = (import option) args;
-          imports = map (subModule: (import subModule) args) (module.imports or [ ]);
-          config = mkMerge (
-            [ (filterAttrs (name: _: name != "imports" && name != "options") module) ] ++ imports
-          );
-        in
-        mkIf (options.${getBaseName option}.enable) config
-      ) (getPaths.dirs path)
+      map
+        (
+          option:
+          let
+            module = (import option) args;
+            imports = map (subModule: (import subModule) args) (module.imports or [ ]);
+            config = mkMerge (
+              [ (filterAttrs (name: _: name != "imports" && name != "options") module) ] ++ imports
+            );
+          in
+          config
+        )
+        (
+          filter (
+            file:
+            let
+              name = getBaseName file;
+            in
+            elem name list
+          ) (getPaths.dirs path)
+        )
     );
 
   hideDesktopEntries =

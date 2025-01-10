@@ -8,11 +8,6 @@
     ];
   };
 
-  environment.systemPackages = with pkgs; [
-    git
-    home-manager
-  ];
-
   networking = {
     hostName = "nixos";
     networkmanager.enable = true;

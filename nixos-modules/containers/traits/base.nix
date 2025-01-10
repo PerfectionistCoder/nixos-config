@@ -8,23 +8,21 @@
 }:
 with lib;
 {
-  config =
-    { ... }:
-    {
-      nixpkgs.pkgs = mkForce pkgs;
-      system.stateVersion = hostCfg.system.stateVersion;
+  config = {
+    nixpkgs.pkgs = mkForce pkgs;
+    system.stateVersion = hostCfg.system.stateVersion;
 
+    users = {
+      mutableUsers = false;
       users = {
-        mutableUsers = false;
-        users = {
-          "${username}" = {
-            uid = userUid;
-            password = "";
-            extraGroups = [ "wheel" ];
-            isNormalUser = true;
-            home = "/home";
-          };
+        "${username}" = {
+          uid = userUid;
+          password = "";
+          extraGroups = [ "wheel" ];
+          isNormalUser = true;
+          home = "/home";
         };
       };
     };
+  };
 }

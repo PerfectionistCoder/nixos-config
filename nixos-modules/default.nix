@@ -6,7 +6,7 @@
 }:
 {
   imports = [
-    ./base.nix
+    ./self.nix
     ./options.nix
     ./containers
   ];

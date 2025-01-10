@@ -63,5 +63,4 @@ in
       }
     ) (customLib.getPaths.excludeDefaultAndDirs ./.)
   );
-
 }

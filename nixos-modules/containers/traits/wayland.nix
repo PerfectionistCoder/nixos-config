@@ -8,14 +8,12 @@
   };
   ephemeral = true;
 
-  config =
-    { ... }:
-    {
-      environment.sessionVariables = {
-        WAYLAND_DISPLAY = "wayland-1";
-        MOZ_ENABLE_WAYLAND = "1";
-        XDG_RUNTIME_DIR = "/run/user/${toString userUid}";
-        DISPLAY = ":0";
-      };
+  config = {
+    environment.sessionVariables = {
+      WAYLAND_DISPLAY = "wayland-1";
+      MOZ_ENABLE_WAYLAND = "1";
+      XDG_RUNTIME_DIR = "/run/user/${toString userUid}";
+      DISPLAY = ":0";
     };
+  };
 }

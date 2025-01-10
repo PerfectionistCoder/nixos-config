@@ -8,7 +8,11 @@
 }:
 with lib;
 {
-  imports = customLib.getPaths.bundleModules ./. ++ [ ./theme ];
+  imports = [
+    ./self.nix
+    ./options.nix
+    ./theme
+  ];
 
   home.packages = flatten (
     map (

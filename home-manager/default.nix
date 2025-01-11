@@ -14,29 +14,33 @@ with lib;
     ./theme
   ];
 
-  home.packages = flatten (
+  home.packages =
     map (
-      path:
-      let
-        name = customLib.getBaseName path;
-      in
-      if (elem name features || name == "common") then
-        (map (
-          subPath:
-          let
-            name = customLib.getBaseName subPath;
-          in
-          if hasSuffix ".sh" name then
-            pkgs.writeShellScriptBin (removeSuffix ".sh" name) (readFile subPath)
-          else if name == "requires.nix" then
-            import subPath pkgs
-          else
-            throw "Unexpected ${name} file in ${path} directory"
-        ) (customLib.getPaths.recursive path))
-      else
-        [ ]
-    ) (customLib.getPaths.dirs ./scripts)
-  );
+      path: pkgs.writeShellScriptBin (removeSuffix ".sh" (customLib.getBaseName path)) (readFile path)
+    ) (customLib.getPaths.files ./scripts)
+    ++ (flatten (
+      map (
+        path:
+        let
+          has = elem (path + "/scripts") (customLib.getPaths.dirs path);
+        in
+        if has then
+          map (
+            path:
+            let
+              name = customLib.getBaseName path;
+            in
+            if hasSuffix ".sh" name then
+              pkgs.writeShellScriptBin (removeSuffix ".sh" name) (readFile path)
+            else if name == "requires.nix" then
+              import path pkgs
+            else
+              throw "Unexpected ${name} file in ${path} directory"
+          ) (customLib.getPaths.files (path + "/scripts"))
+        else
+          [ ]
+      ) (filter (path: elem (customLib.getBaseName path) features) (customLib.getPaths.dirs ./features))
+    ));
 
   xdg = {
     desktopEntries = { } // (customLib.hideDesktopEntries ([ "nixos-manual" ]));

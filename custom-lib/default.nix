@@ -14,22 +14,22 @@ rec {
     rec {
       all = path: readDirFilter path (_: _: true);
 
-      files = path: readDirFilter path (_: value: value == "regualr");
+      files = path: readDirFilter path (_: value: value == "regular");
 
       dirs = path: readDirFilter path (_: value: value == "directory");
 
       excludeDefaultAndDirs =
         path: readDirFilter path (name: value: name != "default.nix" && value != "directory");
 
-      recursive =
-        path:
-        flatten (
-          attrValues (
-            mapAttrs (
-              name: value: if value == "directory" then recursive (path + "/${name}") else "${path}/${name}"
-            ) (readDir path)
-          )
-        );
+      # recursive =
+      #   path:
+      #   flatten (
+      #     attrValues (
+      #       mapAttrs (
+      #         name: value: if value == "directory" then recursive (path + "/${name}") else "${path}/${name}"
+      #       ) (readDir path)
+      #     )
+      #   );
     };
 
   getBaseName = path: last (splitString "/" (toString path));

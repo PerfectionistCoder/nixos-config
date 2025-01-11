@@ -4,10 +4,10 @@ remote=${1?-'Missing name of the remote'}
 
 cd $BACKUP_HOME
 if [ -d "$BACKUP_NAME" ] && [ -n "$(ls -A $BACKUP_NAME)" ]; then
-  time=$(date '+%d-%b-%Y_%X')
-  tar --force-local -czf "$time.tar.gz" -C $BACKUP_NAME .
+	time=$(date '+%d-%b-%Y_%X')
+	tar --force-local -czf "$time.tar.gz" -C $BACKUP_NAME .
 else
-  mkdir $BACKUP_NAME
+	mkdir $BACKUP_NAME
 fi
 
 working_dir=/tmp/$$
@@ -19,12 +19,12 @@ backup_dir=$BACKUP_HOME/$BACKUP_NAME
 
 rm -rf $backup_dir/*
 for item in *; do
-  if [[ $item =~ .*\.gpg ]]; then
-    name=${item%'.gpg'}
-    gpg -o $name -d $item
-    tar -xzf $name
-    mv ${name%'.tar.gz'} $backup_dir
-  else
-    mv $item $backup_dir
-  fi
+	if [[ $item =~ .*\.gpg ]]; then
+		name=${item%'.gpg'}
+		gpg -o $name -d $item
+		tar -xzf $name
+		mv ${name%'.tar.gz'} $backup_dir
+	else
+		mv $item $backup_dir
+	fi
 done

@@ -1,1 +1,0 @@
-nix fmt $NIXOS_CONFIG_HOME

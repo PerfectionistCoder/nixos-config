@@ -5,11 +5,11 @@ remote=${1?-'Missing name of remote'}
 key=${2?-'Missing name of gpg key'}
 
 if [ ! -d "$backup_dir" ]; then
-  echo Backup directory missing
-  exit 1
+	echo Backup directory missing
+	exit 1
 elif [ -z "$(ls -A $backup_dir)" ]; then
-  echo Backup directory is empty
-  exit 2
+	echo Backup directory is empty
+	exit 2
 fi
 
 cd $backup_dir
@@ -19,15 +19,15 @@ mkdir $WORKING_DIR
 trap "rm -rf $working_dir" EXIT
 
 for item in *; do
-  if [ -f $item ]; then
-    cp $item $WORKING_DIR
-  elif [ -d $item ]; then
-    name="$item.tar.gz"
-    tar -czf $name $item
-    gpg -o $name.gpg -r $key -e $name
-    rm $name
-    mv $name.gpg $WORKING_DIR
-  fi
+	if [ -f $item ]; then
+		cp $item $WORKING_DIR
+	elif [ -d $item ]; then
+		name="$item.tar.gz"
+		tar -czf $name $item
+		gpg -o $name.gpg -r $key -e $name
+		rm $name
+		mv $name.gpg $WORKING_DIR
+	fi
 done
 
 rclone sync $WORKING_DIR $remote

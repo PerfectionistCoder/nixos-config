@@ -14,78 +14,35 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
+    treefmt-nix.url = "github:numtide/treefmt-nix";
+
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
 
     firefox-addons.url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
-
-    rust-overlay.url = "github:oxalica/rust-overlay";
   };
 
   outputs =
     {
+      systems,
       nixpkgs,
       nixpkgs-unstable,
       home-manager,
       home-manager-unstable,
-      rust-overlay,
+      treefmt-nix,
       ...
     }@inputs:
     let
       customLib = import ./custom-lib { inherit inputs; };
-      forAllSystems = nixpkgs.lib.genAttrs [
-        "aarch64-linux"
-        "i686-linux"
-        "x86_64-linux"
-        "aarch64-darwin"
-        "x86_64-darwin"
-      ];
+      eachSystem = f: nixpkgs.lib.genAttrs (import systems) (system: f nixpkgs.legacyPackages.${system});
+      treefmtEval = eachSystem (pkgs: treefmt-nix.lib.evalModule pkgs ./treefmt.nix);
     in
     with builtins;
-    forAllSystems (
-      system:
-      let
-        pkgs = import nixpkgs {
-          inherit system;
-          overlays = [
-            (import rust-overlay)
-          ];
-        };
-      in
-      {
-        formatter = nixpkgs.legacyPackages.${system}.nixfmt-rfc-style;
-        devShells = {
-          rust = pkgs.mkShell {
-            nativeBuildInputs = with pkgs; [
-              (rust-bin.stable.latest.default.override {
-                extensions = [
-                  "rust-src"
-                  "cargo"
-                  "rustc"
-                ];
-              })
-              gcc
-            ];
-
-            RUST_SRC_PATH = "${
-              pkgs.rust-bin.stable.latest.default.override {
-                extensions = [ "rust-src" ];
-              }
-            }/lib/rustlib/src/rust/library";
-
-            buildInputs = with pkgs; [
-              clippy
-            ];
-            shellHook = ''
-              PATH+=":/home/desktop/.cargo/bin"
-
-              cd ~/Code/rust
-
-              codium --profile Rust .
-            '';
-          };
-        };
-      }
-    )
+    {
+      formatter = eachSystem (pkgs: treefmtEval.${pkgs.system}.config.build.wrapper);
+      checks = eachSystem (pkgs: {
+        formatting = treefmtEval.${pkgs.system}.config.build.check self;
+      });
+    }
     // (
       let
         nixosModules = ./nixos-modules;

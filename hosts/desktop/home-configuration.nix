@@ -9,10 +9,6 @@
   ];
 
   custom = {
-    features = {
-      bat.customTheme = true;
-    };
-
     defaultShellCommand = "zsh";
   };
 }

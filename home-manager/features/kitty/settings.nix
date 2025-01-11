@@ -15,7 +15,6 @@ config: {
 
   scrollback_lines = 10000;
   scrollback_indicator_opacity = 0;
-  scrollback_pager = "bat";
   scrollback_fill_enlarged_window = true;
 
   mouse_hide_wait = 0;

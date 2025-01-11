@@ -3,7 +3,6 @@
   lib,
   config,
   inputs,
-  monitor ? { },
   ...
 }:
 with builtins;
@@ -19,19 +18,25 @@ with config.custom;
     enable = true;
     package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
     settings =
-      with monitor;
       import ./env.nix
       // import ./binds.nix lib
       // import ./general.nix theme
       // import ./animations.nix
       // import ./rules.nix lib theme
-      // {
-        monitor = "HDMI-A-1, ${toString width}x${toString height}@${toString hz}, 0x0, 1";
-        exec-once = [
-          "eww open mainbar; update-volume; update-mute"
-          "hyprctl dispatch movecursor ${toString (width / 2)} ${toString (height / 2)}"
-        ];
-      };
+      // (
+        let
+          width = 2560;
+          height = 1080;
+          hz = 60;
+        in
+        {
+          monitor = "HDMI-A-1, ${toString width}x${toString height}@${toString hz}, 0x0, 1";
+          exec-once = [
+            "eww open mainbar; update-volume; update-mute"
+            "hyprctl dispatch movecursor ${toString (width / 2)} ${toString (height / 2)}"
+          ];
+        }
+      );
     extraConfig = import ./config.nix lib;
   };
 }

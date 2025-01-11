@@ -1,4 +1,5 @@
-if [[ $1 == -* ]]; then
+if [[ $1 == "--unwrap" ]]; then
+  shift
   sudo /run/current-system/sw/bin/nixos-rebuild $*
 else
   cmd=$1

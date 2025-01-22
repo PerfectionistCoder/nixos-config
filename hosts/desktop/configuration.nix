@@ -18,8 +18,11 @@
     };
   };
 
-  hardware.amdgpu = {
-    initrd.enable = true;
-    amdvlk.enable = true;
+  hardware = {
+    graphics.enable = true;
+    amdgpu = {
+      initrd.enable = true;
+      amdvlk.enable = true;
+    };
   };
 }

@@ -11,8 +11,9 @@
     };
 
     tmp = {
+      cleanOnBoot = true;
       useTmpfs = true;
-      tmpfsSize = "30%";
+      tmpfsSize = "50%";
     };
   };
 

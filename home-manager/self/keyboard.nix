@@ -1,4 +1,0 @@
-{ ... }:
-{
-  home.keyboard = null;
-}

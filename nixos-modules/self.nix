@@ -55,21 +55,8 @@
       LC_TIME = "en_GB.UTF-8";
     };
   };
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "";
-  };
-  console.keyMap = "us";
 
-  security.rtkit.enable = true;
-  services = {
-    pipewire = {
-      enable = true;
-      alsa.enable = true;
-      alsa.support32Bit = true;
-      pulse.enable = true;
-    };
-  };
+  services.pipewire.enable = true;
 
   services.udisks2.enable = true;
 }

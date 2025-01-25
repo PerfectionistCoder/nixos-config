@@ -7,7 +7,6 @@
     "MAX_WORKSPACE, 5"
 
     "VOLUME_STEP,2"
-    "BRIGHTNESS_STEP, 0.1"
   ];
   "$mod" = "SUPER";
   "$terminal" = "alacritty";

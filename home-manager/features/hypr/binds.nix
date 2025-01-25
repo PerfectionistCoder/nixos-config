@@ -76,8 +76,8 @@ in
     ", XF86AudioRaiseVolume, exec, set-volume up"
     ", XF86AudioLowerVolume, exec, set-volume down"
 
-    ", XF86MonBrightnessUp, exec, set-brightness up"
-    ", XF86MonBrightnessDown, exec, set-brightness down"
+    # ", XF86MonBrightnessUp, exec, set-brightness up"
+    # ", XF86MonBrightnessDown, exec, set-brightness down"
   ];
 
   bindm = [

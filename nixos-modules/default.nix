@@ -7,7 +7,7 @@
 {
   imports = [
     ./self.nix
-    ./containers
+    # ./containers
   ];
 
   config = customLib.mergeConfigs features ./features args;

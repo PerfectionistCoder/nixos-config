@@ -137,13 +137,13 @@ let
       # select
       {
         on = "<Space>";
-        run = "select";
+        run = "toggle";
         desc = "Toggle the current selection state";
       }
       {
         on = "<Tab>";
         run = [
-          "select"
+          "toggle"
           "arrow 1"
         ];
         desc = "Toggle the current selection state and move cursor down";
@@ -152,13 +152,13 @@ let
         on = "<C-Tab>";
         run = [
           "arrow -1"
-          "select"
+          "toggle"
         ];
         desc = "Toggle the current selection state and move cursor up";
       }
       {
         on = "a";
-        run = "select_all --state=true";
+        run = "toggle_all --state=true";
         desc = "Select all files";
       }
       # open

@@ -5,8 +5,8 @@
     settings = {
       ipc = "on";
       splash = false;
-      preload = [ "~/Pictures/nixos.png" ];
-      wallpaper = [ "HDMI-A-1,~/Pictures/nixos.png" ];
+      preload = [ "~/Downloads/amber-d.jxl" ];
+      wallpaper = [ "HDMI-A-1,~/Downloads/amber-d.jxl" ];
     };
   };
 }

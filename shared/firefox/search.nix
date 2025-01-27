@@ -5,7 +5,7 @@ rec {
   engines = {
     "SearXNG" = {
       urls = [
-        { template = "https://search.rhscz.eu/search?q={searchTerms}&language=en"; }
+        { template = "https://search.rhscz.eu/search?q=!go {searchTerms}&language=en"; }
       ];
     };
 

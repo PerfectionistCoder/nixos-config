@@ -22,4 +22,6 @@
 
   # autoload extensions
   "extensions.autoDisableScopes" = 0;
+
+  "browser.tabs.hoverPreview.showThumbnails" = false;
 }

@@ -16,7 +16,6 @@ with config.custom;
 
   wayland.windowManager.hyprland = {
     enable = true;
-    package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
     settings =
       import ./env.nix
       // import ./binds.nix lib

@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 {
   imports = [ /etc/nixos/hardware-configuration.nix ];
 
@@ -59,4 +59,9 @@
   services.pipewire.enable = true;
 
   services.udisks2.enable = true;
+
+  environment.systemPackages = with pkgs; [
+    git
+    home-manager
+  ];
 }

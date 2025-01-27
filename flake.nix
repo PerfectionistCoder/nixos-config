@@ -14,14 +14,7 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
-    extra-container = {
-      url = "github:erikarvstedt/extra-container";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     treefmt-nix.url = "github:numtide/treefmt-nix";
-
-    hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
 
     firefox-addons.url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
   };
@@ -33,7 +26,6 @@
       nixpkgs-unstable,
       home-manager,
       home-manager-unstable,
-      extra-container,
       treefmt-nix,
       ...
     }@inputs:
@@ -69,7 +61,6 @@
             modules = [
               configPath
               nixosModules
-              extra-container.nixosModules.default
             ];
           };
         mkHomeManager =

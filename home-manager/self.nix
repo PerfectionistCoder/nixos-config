@@ -1,7 +1,6 @@
 { flakeHostname, username, ... }:
 {
   home.stateVersion = "24.05";
-  programs.home-manager.enable = true;
 
   # home.enableNixpkgsReleaseCheck = false;
   news.display = "silent";
@@ -22,12 +21,5 @@
         exec Hyprland
       fi
     '';
-  };
-
-  programs.git = {
-    enable = true;
-    extraConfig = {
-      init.defaultBranch = "main";
-    };
   };
 }

@@ -15,5 +15,7 @@
     "vscodium"
     "wl-nightlight"
     "yazi"
+
+    "fonts"
   ];
 }

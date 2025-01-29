@@ -16,6 +16,7 @@
     "wl-nightlight"
     "yazi"
 
+    "extra-container"
     "fonts"
   ];
 }

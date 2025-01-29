@@ -2,16 +2,13 @@
 {
   fonts = {
     packages = with pkgs; [
-      (ibm-plex.override { families = [ "sans" ]; })
-      cascadia-code
+      nerd-fonts.caskaydia-mono
     ];
     fontconfig = {
       defaultFonts = {
-        sansSerif = [
-          "IBM Plex Sans"
-        ];
+        sansSerif = [ ];
         monospace = [
-          "Cascadia Mono NF"
+          "CaskaydiaMono NF"
         ];
       };
     };

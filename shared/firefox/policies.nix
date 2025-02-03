@@ -57,10 +57,8 @@
   DisplayBookmarksToolbar = "never";
   DisplayMenuBar = "never";
   DNSOverHTTPS = {
-    Enabled = true;
-    ProviderURL = "https://cloudflare-dns.com/dns-query";
-    Locked = true;
-    Fallback = true;
+    Enabled = false;
+    ProviderURL = "";
   };
   DontCheckDefaultBrowser = true;
   EnableTrackingProtection = {

@@ -38,7 +38,5 @@ with lib;
     ) (filter (path: elem (customLib.getBaseName path) features) (customLib.getPaths.dirs ./features))
   );
 
-  xdg = {
-    desktopEntries = { } // (customLib.hideDesktopEntries ([ "nixos-manual" ]));
-  };
+  xdg.desktopEntries = customLib.hideDesktopEntries ([ "nixos-manual" ]);
 }

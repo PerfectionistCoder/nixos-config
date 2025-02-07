@@ -4,5 +4,12 @@
     nurl
     nixfmt-rfc-style
     shfmt
+    alacritty
+    nushell
+    carapace
+    starship
+    chezmoi
+    rclone
+    age
   ];
 }

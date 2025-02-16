@@ -2,11 +2,11 @@
 {
   fonts = {
     packages = with pkgs; [
-      nerd-fonts.caskaydia-mono
+      # nerd-fonts.caskaydia-mono
+      (nerdfonts.override { fonts = [ "CascadiaMono" ]; })
     ];
     fontconfig = {
       defaultFonts = {
-        sansSerif = [ ];
         monospace = [
           "CaskaydiaMono NF"
         ];

@@ -3,15 +3,10 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/release-24.11";
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     home-manager = {
       url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
-    home-manager-unstable = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     treefmt-nix.url = "github:numtide/treefmt-nix";
@@ -23,9 +18,7 @@
     {
       systems,
       nixpkgs,
-      nixpkgs-unstable,
       home-manager,
-      home-manager-unstable,
       treefmt-nix,
       ...
     }@inputs:
@@ -52,11 +45,9 @@
         mkHost =
           params:
           with params;
-          (if stable then nixpkgs else nixpkgs-unstable).lib.nixosSystem {
+          nixpkgs.lib.nixosSystem {
             specialArgs = {
               inherit inputs customLib;
-              home-manager = if stable then home-manager else home-manager-unstable;
-              shared = sharedModules;
             } // params;
             modules = [
               configPath
@@ -66,8 +57,8 @@
         mkHomeManager =
           params:
           with params;
-          (if stable then home-manager else home-manager-unstable).lib.homeManagerConfiguration {
-            pkgs = customLib.getPkgs system stable;
+          home-manager.lib.homeManagerConfiguration {
+            pkgs = customLib.getPkgs system;
             extraSpecialArgs = {
               inherit inputs customLib flakeHostname;
               shared = sharedModules;

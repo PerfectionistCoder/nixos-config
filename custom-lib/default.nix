@@ -2,9 +2,7 @@
 with inputs.nixpkgs.lib;
 with builtins;
 rec {
-  getPkgs =
-    system: stable:
-    import inputs.${if stable then "nixpkgs" else "nixpkgs-unstable"} { inherit system; };
+  getPkgs = system: import inputs.nixpkgs { inherit system; };
 
   getPaths =
     let

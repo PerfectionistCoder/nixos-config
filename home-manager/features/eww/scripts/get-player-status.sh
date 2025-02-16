@@ -1,2 +1,0 @@
-playerctl status
-trap "" EXIT

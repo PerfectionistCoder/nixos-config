@@ -11,5 +11,6 @@
     chezmoi
     rclone
     age
+    lf
   ];
 }

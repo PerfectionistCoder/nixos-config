@@ -12,5 +12,6 @@
     rclone
     age
     lf
+    vscodium
   ];
 }

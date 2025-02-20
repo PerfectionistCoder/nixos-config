@@ -1,19 +1,13 @@
-{ pkgs, ... }:
+{ pkgs, ... }@args:
 {
   imports = [ /etc/nixos/hardware-configuration.nix ];
 
-  system.stateVersion = "24.11";
+  system.stateVersion = (import /etc/nixos/configuration.nix args).system.stateVersion;
 
   boot = {
     loader = {
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
-    };
-
-    tmp = {
-      cleanOnBoot = true;
-      useTmpfs = true;
-      tmpfsSize = "50%";
     };
   };
 
@@ -22,23 +16,13 @@
       "nix-command"
       "flakes"
     ];
-
-    gc = {
-      automatic = true;
-      dates = "monthly";
-      options = "--delete-older-than 1d";
-    };
-    optimise = {
-      automatic = true;
-      dates = [ "weekly" ];
-    };
   };
 
   networking = {
     hostName = "nixos";
     networkmanager.enable = true;
   };
-  systemd.services.NetowrkManager-wait-online.enable = false;
+  systemd.services.NetworkManager-wait-online.enable = false;
 
   time.timeZone = "Europe/London";
   i18n = {

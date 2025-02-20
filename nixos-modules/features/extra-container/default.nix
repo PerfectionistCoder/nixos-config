@@ -1,6 +1,16 @@
-{ ... }:
+{ pkgs, ... }:
 {
-  programs.extra-container.enable = true;
+  environment.systemPackages = [
+    (pkgs.extra-container.overrideAttrs {
+      src = pkgs.fetchFromGitHub {
+        owner = "erikarvstedt";
+        repo = "extra-container";
+        rev = "fa723fb67201c1b4610fd3d608681da362f800eb";
+        hash = "sha256-wnRkafo4YrIuvJeRsOmfStxIzi7ty2I0OtGMO9chwJc=";
+      };
+    })
+  ];
+  boot.extraSystemdUnitPaths = [ "/etc/systemd-mutable/system" ];
 
   networking.nat = {
     enable = true;

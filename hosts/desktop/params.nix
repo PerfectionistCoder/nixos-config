@@ -6,14 +6,9 @@
     "hypr"
 
     "cursor"
-    "eww"
     "firefox"
-    "gtk"
     "rofi"
     "starship"
-    "vscodium"
-    "wl-nightlight"
-    "yazi"
 
     "extra-container"
     "fonts"

@@ -1,5 +1,4 @@
 {
-  pkgs,
   username,
   ...
 }:
@@ -17,6 +16,8 @@
       };
     };
   };
+
+  services.getty.autologinUser = username;
 
   hardware = {
     graphics.enable = true;

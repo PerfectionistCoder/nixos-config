@@ -3,7 +3,7 @@
   {((hex >> 24) & 0xFF) / 255.0f, ((hex >> 16) & 0xFF) / 255.0f,               \
    ((hex >> 8) & 0xFF) / 255.0f, (hex & 0xFF) / 255.0f}
 /* appearance */
-static const int sloppyfocus = 1; /* focus follows mouse */
+static const int sloppyfocus = 0; /* focus follows mouse */
 /* 1 means idle inhibitors will disable idle tracking even if it's surface isn't
  * visible*/
 static const int bypass_surface_visibility = 0;
@@ -28,7 +28,8 @@ static const float fullscreen_bg[] = {0.1f, 0.1f, 0.1f, 0.1f};
 static int log_level = WLR_ERROR;
 
 /* Autostart */
-static const char *const autostart[] = {NULL};
+static const char *const autostart[] = {"systemctl", "start", "--user",
+                                        "window-manager.target", NULL, NULL};
 
 /* NOTE: ALWAYS keep a rule declared even if you don't use rules (e.g leave at
  * least one example) */
@@ -152,8 +153,6 @@ static const Key keys[] = {
     {MOVE_MODKEY, XKB_KEY_K, swapdir, {.ui = 3}},
     {SIZE_MODKEY, XKB_KEY_h, setmfact, {.f = -0.01f}},
     {SIZE_MODKEY, XKB_KEY_l, setmfact, {.f = +0.01f}},
-    {SIZE_MODKEY, XKB_KEY_k, setcfact, {.f = -0.25f}},
-    {SIZE_MODKEY, XKB_KEY_j, setcfact, {.f = +0.25f}},
 
     {MODKEY, XKB_KEY_q, killclient, {0}},
     {MODKEY, XKB_KEY_space, togglefloating, {0}},

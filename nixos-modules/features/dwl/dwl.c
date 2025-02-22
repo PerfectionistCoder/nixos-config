@@ -162,7 +162,6 @@ typedef struct {
   uint32_t tags;
   int isfloating, isurgent, isfullscreen;
   uint32_t resize; /* configure serial of a pending resize */
-  float cweight;
 } Client;
 
 typedef struct {
@@ -368,7 +367,6 @@ static void requestmonstate(struct wl_listener *listener, void *data);
 static void resizeapply(Client *c, struct wlr_box geo, int interact);
 static void resizenoapply(Client *c, struct wlr_box geo, int interact);
 static void run(char *startup_cmd);
-static void setcfact(const Arg *arg);
 static void setcursor(struct wl_listener *listener, void *data);
 static void setcursorshape(struct wl_listener *listener, void *data);
 static void setfloating(Client *c, int floating);
@@ -1227,7 +1225,6 @@ void createnotify(struct wl_listener *listener, void *data) {
   c = toplevel->base->data = ecalloc(1, sizeof(*c));
   c->surface.xdg = toplevel->base;
   c->bw = borderpx;
-  c->cweight = 1.0;
 
   LISTEN(&toplevel->base->surface->events.commit, &c->commit, commitnotify);
   LISTEN(&toplevel->base->surface->events.map, &c->map, mapnotify);
@@ -2568,17 +2565,6 @@ void run(char *startup_cmd) {
   wl_display_run(dpy);
 }
 
-void setcfact(const Arg *arg) {
-  Client *sel = focustop(selmon);
-
-  if (!arg || !sel || !selmon->lt[selmon->sellt]->arrange)
-    return;
-  sel->cweight = (float)(arg->f ? sel->cweight + arg->f : 1.0);
-  if (sel->cweight < 0)
-    sel->cweight = 0;
-  arrange(selmon);
-}
-
 void setcursor(struct wl_listener *listener, void *data) {
   /* This event is raised by the seat when a client provides a cursor image */
   struct wlr_seat_pointer_request_set_cursor_event *event = data;
@@ -2982,7 +2968,6 @@ void tagmon(const Arg *arg) {
 void tile(Monitor *m) {
   unsigned int mw, my, ty;
   int i, n = 0;
-  float mweight = 0, tweight = 0;
   Client *c;
 
   wl_list_for_each(c, &clients, link) if (VISIBLEON(c, m) && !c->isfloating &&
@@ -2994,16 +2979,6 @@ void tile(Monitor *m) {
     mw = m->nmaster ? (int)roundf(m->w.width * m->mfact) : 0;
   else
     mw = m->w.width;
-  i = 0;
-  wl_list_for_each(c, &clients, link) {
-    if (!VISIBLEON(c, m) || c->isfloating || c->isfullscreen)
-      continue;
-    if (i < m->nmaster)
-      mweight += c->cweight;
-    else
-      tweight += c->cweight;
-    i++;
-  }
   i = my = ty = 0;
   wl_list_for_each(c, &clients, link) {
     if (!VISIBLEON(c, m) || c->isfloating || c->isfullscreen)
@@ -3013,8 +2988,8 @@ void tile(Monitor *m) {
              (struct wlr_box){.x = m->w.x,
                               .y = m->w.y + my,
                               .width = mw,
-                              .height =
-                                  (int)((c->cweight / mweight) * m->w.height)},
+                              .height = (m->w.height - my) /
+                                        (MIN(n, m->nmaster) - i)},
              0);
       my += c->geom.height;
     } else {
@@ -3022,8 +2997,7 @@ void tile(Monitor *m) {
              (struct wlr_box){.x = m->w.x + mw,
                               .y = m->w.y + ty,
                               .width = m->w.width - mw,
-                              .height =
-                                  (int)((c->cweight / tweight) * m->w.height)},
+                              .height = (m->w.height - ty) / (n - i)},
              0);
       ty += c->geom.height;
     }
@@ -3407,7 +3381,6 @@ void createnotifyx11(struct wl_listener *listener, void *data) {
   c->surface.xwayland = xsurface;
   c->type = X11;
   c->bw = client_is_unmanaged(c) ? 0 : borderpx;
-  c->cweight = 1.0;
 
   /* Listen to the various events it can emit */
   LISTEN(&xsurface->events.associate, &c->associate, associatex11);

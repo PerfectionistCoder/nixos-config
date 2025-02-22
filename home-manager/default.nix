@@ -11,7 +11,6 @@ with lib;
   imports = [
     ./self.nix
     ./options.nix
-    ./theme
   ];
 
   home.packages = flatten (

@@ -17,5 +17,7 @@
 
     "extra-container"
     "fonts"
+
+    "dwl"
   ];
 }

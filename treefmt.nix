@@ -7,4 +7,5 @@
     enable = true;
     indent_size = 0;
   };
+  programs.clang-format.enable = true;
 }

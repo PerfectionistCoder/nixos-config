@@ -13,8 +13,6 @@
   /*
     alwayscenter
     autostart
-    cfact
-    customfloat
     miminalborders
     mode
     simpleborders

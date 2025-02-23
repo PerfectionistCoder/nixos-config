@@ -13,13 +13,10 @@ static const float rootcolor[] = COLOR(0x222222ff);
 static const float bordercolor[] = COLOR(0x444444ff);
 static const float focuscolor[] = COLOR(0x005577ff);
 static const float urgentcolor[] = COLOR(0xff0000ff);
-/* 1 to monitor center while respecting the monitor's reserved area, 0 to
- * monitor center */
-static const int respect_monitor_reserved_area = 1;
 /* This conforms to the xdg-protocol. Set the alpha to zero to restore the old
  * behavior */
 /* You can also use glsl colors */
-static const float fullscreen_bg[] = {0.1f, 0.1f, 0.1f, 0.1f};
+static const float fullscreen_bg[] = {0.1f, 0.1f, 0.1f, 1.0f};
 
 /* tagging - TAGCOUNT must be no greater than 31 */
 #define TAGCOUNT (9)
@@ -28,14 +25,13 @@ static const float fullscreen_bg[] = {0.1f, 0.1f, 0.1f, 0.1f};
 static int log_level = WLR_ERROR;
 
 /* Autostart */
-static const char *const autostart[] = {"systemctl", "start", "--user",
-                                        "window-manager.target", NULL, NULL};
+static const char *const autostart[] = {NULL};
 
 /* NOTE: ALWAYS keep a rule declared even if you don't use rules (e.g leave at
  * least one example) */
 static const Rule rules[] = {
-    /* app_id title tags mask isfloating monitor x y width height */
-    {"example", NULL, 0, 0, -1, 0, 0, 0, 0},
+    /* app_id title tags_mask isfloating */
+    {"example", NULL, 0, 0, -1},
 };
 
 /* layout(s) */
@@ -134,6 +130,9 @@ const char *modes_labels[] = {"quit"};
 
 /* commands */
 static const char *termcmd[] = {"alacritty", NULL};
+static const char *menucmd[] = {"kickoff", NULL};
+static const char *filemanager[] = {"alacritty", "-e", "lf", NULL};
+
 static const char *suspend[] = {"suspend", NULL};
 static const char *reboot[] = {"reboot", NULL};
 static const char *poweroff[] = {"poweroff", NULL};
@@ -142,6 +141,8 @@ static const Key keys[] = {
     /* Note that Shift changes certain key codes: c -> C, 2 -> at, etc. */
     /* modifier key function argument */
     {MODKEY, XKB_KEY_Return, spawn, {.v = termcmd}},
+    {MODKEY, XKB_KEY_p, spawn, {.v = menucmd}},
+    {MODKEY, XKB_KEY_e, spawn, {.v = filemanager}},
 
     {MODKEY, XKB_KEY_h, focusdir, {.ui = 0}},
     {MODKEY, XKB_KEY_l, focusdir, {.ui = 1}},

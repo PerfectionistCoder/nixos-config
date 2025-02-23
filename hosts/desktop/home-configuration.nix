@@ -13,5 +13,6 @@
     age
     lf
     vscodium
+    kickoff
   ];
 }

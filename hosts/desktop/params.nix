@@ -3,16 +3,12 @@
   system = "x86_64-linux";
 
   features = [
-    "hypr"
+    "river"
 
     "cursor"
     "firefox"
-    "rofi"
-    "starship"
 
     "extra-container"
     "fonts"
-
-    "dwl"
   ];
 }

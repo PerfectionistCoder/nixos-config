@@ -20,4 +20,7 @@
     externalInterface = "wlp4s0";
     enableIPv6 = true;
   };
+
+  security.polkit.extraConfig = builtins.readFile ./rules.js;
+  users.groups.machine = { };
 }

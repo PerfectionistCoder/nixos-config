@@ -11,6 +11,7 @@
         extraGroups = [
           "networkmanager"
           "wheel"
+          "machine"
         ];
         useDefaultShell = true;
       };

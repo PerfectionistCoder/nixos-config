@@ -37,6 +37,7 @@
           modules = [
             configPath
             nixosModules
+            (import ./overlays)
           ];
         };
       mkHomeManager =

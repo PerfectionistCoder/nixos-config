@@ -1,6 +1,7 @@
 {
   pkgs,
   inputs,
+  overlays,
   ...
 }@args:
 {
@@ -22,11 +23,17 @@
         "flakes"
       ];
     };
-    channel.enable = false;
     nixPath = [
-      "nixpkgs=${inputs.nixpkgs.outPath}"
-      "nixpkgs-unstable=${inputs.nixpkgs-unstable.outPath}"
+      "nixpkgs=/etc/nix/inputs/nixpkgs"
+      "nixpkgs-unstable=/etc/nix/inputs/nixpkgs-unstable"
+      "nixpkgs-overlays=/etc/nix/inputs/nixpkgs-overlays"
     ];
+    channel.enable = false;
+  };
+  environment.etc = {
+    "nix/inputs/nixpkgs".source = "${inputs.nixpkgs}";
+    "nix/inputs/nixpkgs-unstable".source = "${inputs.nixpkgs-unstable}";
+    "nix/inputs/nixpkgs-overlays".source = "${inputs.nixpkgs-overlays}";
   };
 
   networking = {

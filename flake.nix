@@ -31,12 +31,15 @@
         with params;
         nixpkgs.lib.nixosSystem {
           specialArgs = {
-            inherit inputs customLib;
+            inherit customLib;
+            inputs = inputs // {
+              nixpkgs-overlays = ./overlays/nixpkgs.nix;
+            };
           } // params;
           modules = [
             configPath
             nixosModules
-            { nixpkgs.overlays = import ./overlays.nix; }
+            { nixpkgs.overlays = import ./overlays/nixos.nix; }
           ];
         };
       mkHomeManager =

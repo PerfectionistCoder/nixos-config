@@ -1,4 +1,8 @@
-{ pkgs, ... }@args:
+{
+  pkgs,
+  inputs,
+  ...
+}@args:
 {
   imports = [ /etc/nixos/hardware-configuration.nix ];
 
@@ -12,9 +16,16 @@
   };
 
   nix = {
-    settings.experimental-features = [
-      "nix-command"
-      "flakes"
+    settings = {
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
+    };
+    channel.enable = false;
+    nixPath = [
+      "nixpkgs=${inputs.nixpkgs.outPath}"
+      "nixpkgs-unstable=${inputs.nixpkgs-unstable.outPath}"
     ];
   };
 
@@ -44,6 +55,5 @@
 
   environment.systemPackages = with pkgs; [
     git
-    home-manager
   ];
 }

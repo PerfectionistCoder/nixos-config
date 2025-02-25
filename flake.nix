@@ -4,27 +4,24 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
-
-    home-manager = {
-      url = "github:nix-community/home-manager/release-24.11";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs =
     {
       nixpkgs,
       home-manager,
+
       ...
     }@inputs:
     let
       customLib = import ./custom-lib { inherit inputs; };
 
       nixosModules = ./nixos-modules;
-      homeManagerModules = ./home-manager;
-      sharedModules = import ./shared;
 
       hostsDir = ./hosts;
+
+      system = "x86_64-linux";
+      pkgs = nixpkgs.legacyPackages.${system};
 
       mkHost =
         params:
@@ -40,20 +37,6 @@
             configPath
             nixosModules
             { nixpkgs.overlays = import ./overlays/nixos.nix; }
-          ];
-        };
-      mkHomeManager =
-        params:
-        with params;
-        home-manager.lib.homeManagerConfiguration {
-          pkgs = customLib.getPkgs system;
-          extraSpecialArgs = {
-            inherit inputs customLib flakeHostname;
-            shared = sharedModules;
-          } // params;
-          modules = [
-            configPath
-            homeManagerModules
           ];
         };
       genConfiguration =
@@ -80,7 +63,22 @@
         );
     in
     {
+      packages.${system}.default = pkgs.buildEnv {
+        name = "my-env";
+        paths = with pkgs; [
+          nurl
+          nixfmt-rfc-style
+          shfmt
+          alacritty
+          nushell
+          carapace
+          starship
+          chezmoi
+          lf
+          vscodium
+          kickoff
+        ];
+      };
       nixosConfigurations = genConfiguration hostsDir "configuration";
-      homeConfigurations = genConfiguration hostsDir "home-configuration";
     };
 }

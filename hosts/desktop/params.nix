@@ -4,10 +4,6 @@
 
   features = [
     "river"
-
-    "cursor"
-    "firefox"
-
     "extra-container"
     "fonts"
   ];

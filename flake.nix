@@ -4,6 +4,10 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-overlays = {
+      url = "path:./overlays/nixpkgs.nix";
+      flake = false;
+    };
   };
 
   outputs =
@@ -14,71 +18,43 @@
       ...
     }@inputs:
     let
-      customLib = import ./custom-lib { inherit inputs; };
+      lib = nixpkgs.lib.extend (import ./lib);
+      inherit (builtins) listToAttrs;
+      inherit (lib) genAttrs entryNames;
 
       nixosModules = ./nixos-modules;
-
       hostsDir = ./hosts;
 
-      system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
-
-      mkHost =
-        params:
-        with params;
-        nixpkgs.lib.nixosSystem {
-          specialArgs = {
-            inherit customLib;
-            inputs = inputs // {
-              nixpkgs-overlays = ./overlays/nixpkgs.nix;
-            };
-          } // params;
-          modules = [
-            configPath
-            nixosModules
-            { nixpkgs.overlays = import ./overlays/nixos.nix; }
-          ];
-        };
-      genConfiguration =
-        path: type:
-        assert builtins.match "home-configuration|configuration" type != null;
-        builtins.listToAttrs (
-          map (
-            hostPath:
-            let
-              flakeHostname = customLib.getBaseName hostPath;
-              value = (if type == "home-configuration" then mkHomeManager else mkHost) (
-                {
-                  inherit flakeHostname;
-                  configPath = hostPath + "/${type}.nix";
-                }
-                // import (hostPath + "/params.nix")
-              );
-            in
-            {
-              inherit value;
-              name = flakeHostname;
-            }
-          ) (customLib.getPaths.dirs path)
-        );
+      eachSystem = genAttrs [ "x86_64-linux" ];
     in
     {
-      packages.${system}.default = pkgs.buildEnv {
-        name = "my-env";
-        paths = with pkgs; [
-          nurl
-          nixfmt-rfc-style
-          shfmt
-          alacritty
-          nushell
-          carapace
-          starship
-          chezmoi
-          lf
-          vscodium
-          kickoff
-        ];
-      };
-      nixosConfigurations = genConfiguration hostsDir "configuration";
+      packages = eachSystem (
+        system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+        in
+        {
+          default = pkgs.buildEnv {
+            name = "nix-packages";
+            paths = import ./packages pkgs;
+          };
+        }
+      );
+      nixosConfigurations = listToAttrs (
+        map (name: {
+          inherit name;
+          value = nixpkgs.lib.nixosSystem {
+            inherit lib;
+            specialArgs = {
+              inherit inputs;
+            };
+            modules = [
+              "${hostsDir}/${name}/config.nix"
+              nixosModules
+              { nixpkgs.overlays = import ./overlays/nixos.nix; }
+            ];
+          };
+        }) (entryNames hostsDir)
+      );
     };
 }

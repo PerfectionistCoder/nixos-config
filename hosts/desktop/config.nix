@@ -1,11 +1,11 @@
-{
-  username,
-  ...
-}:
+{ ... }:
+let
+  username = "user";
+in
 {
   users = {
     users = {
-      "${username}" = {
+      ${username} = {
         uid = 1000;
         isNormalUser = true;
         extraGroups = [
@@ -13,15 +13,15 @@
           "wheel"
           "machine"
         ];
-        useDefaultShell = true;
       };
     };
   };
-
   services.getty.autologinUser = username;
 
-  hardware = {
+  features = {
+    extra-container.enable = true;
+    fonts.enable = true;
     graphics.enable = true;
-    amdgpu.initrd.enable = true;
+    river.enable = true;
   };
 }

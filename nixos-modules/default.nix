@@ -1,13 +1,14 @@
 {
+  config,
+  lib,
   pkgs,
-  customLib,
-  features,
   ...
 }@args:
+let
+  inherit (lib) a;
+in
 {
   imports = [
     ./self.nix
-  ];
-
-  config = customLib.mergeConfigs features ./features args;
+  ] ++ lib.modulesMkOption config args ./features;
 }

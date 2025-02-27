@@ -3,15 +3,7 @@
   fonts = {
     enableDefaultPackages = false;
     packages = with pkgs; [
-      # nerd-fonts.caskaydia-mono
-      (nerdfonts.override { fonts = [ "CascadiaMono" ]; })
+      selfDefinePkgs.fonts.monospace
     ];
-    fontconfig = {
-      defaultFonts = {
-        monospace = [
-          "CaskaydiaMono NF"
-        ];
-      };
-    };
   };
 }

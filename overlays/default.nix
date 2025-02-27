@@ -1,5 +1,11 @@
 [
   (final: prev: {
+    selfDefinePkgs = {
+      fonts = {
+        monospace = (prev.nerdfonts.override { fonts = [ "CascadiaMono" ]; });
+      };
+    };
+
     extra-container = prev.extra-container.overrideAttrs {
       version = "0.13";
       src = prev.fetchFromGitHub {

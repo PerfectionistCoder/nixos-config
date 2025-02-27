@@ -4,17 +4,11 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixpkgs-overlays = {
-      url = "path:./overlays/nixpkgs.nix";
-      flake = false;
-    };
   };
 
   outputs =
     {
       nixpkgs,
-      home-manager,
-
       ...
     }@inputs:
     let
@@ -22,10 +16,10 @@
       inherit (builtins) listToAttrs;
       inherit (lib) genAttrs entryNames;
 
+      eachSystem = genAttrs [ "x86_64-linux" ];
+
       nixosModules = ./nixos-modules;
       hostsDir = ./hosts;
-
-      eachSystem = genAttrs [ "x86_64-linux" ];
     in
     {
       packages = eachSystem (
@@ -46,12 +40,14 @@
           value = nixpkgs.lib.nixosSystem {
             inherit lib;
             specialArgs = {
-              inherit inputs;
+              inputs = inputs // {
+                nixpkgs-overlays = ./overlays/default.nix;
+              };
             };
             modules = [
               "${hostsDir}/${name}/config.nix"
               nixosModules
-              { nixpkgs.overlays = import ./overlays/nixos.nix; }
+              { nixpkgs.overlays = import ./overlays; }
             ];
           };
         }) (entryNames hostsDir)

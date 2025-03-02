@@ -11,6 +11,10 @@
     enableIPv6 = true;
   };
 
-  security.polkit.extraConfig = builtins.readFile ./rules.js;
+  security.polkit = {
+    enable = true;
+    extraConfig = builtins.readFile ./rules.js;
+    debug = true;
+  };
   users.groups.machine = { };
 }

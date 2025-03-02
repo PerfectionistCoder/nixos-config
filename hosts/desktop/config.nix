@@ -23,5 +23,6 @@ in
     fonts.enable = true;
     graphics.enable = true;
     river.enable = true;
+    resolved.enable = true;
   };
 }

@@ -7,7 +7,7 @@
     internalInterfaces = [
       "ve-+"
     ];
-    externalInterface = "wlp4s0";
+    externalInterface = "wlan0";
     enableIPv6 = true;
   };
 

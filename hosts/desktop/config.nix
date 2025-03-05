@@ -22,8 +22,8 @@ in
     extra-container.enable = true;
     fonts.enable = true;
     graphics.enable = true;
-    network-manager.enable = true;
     resolved.enable = true;
     river.enable = true;
   };
+  networking.wireless.iwd.enable = true;
 }
